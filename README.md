@@ -1,63 +1,42 @@
 
-# Development Board Template
-
-A generic and modular development board based on the [Microcontroller Name], designed for rapid prototyping, embedded systems education, IoT experimentation, and wearable devices. This board combines flexible power options, modern connectivity, and accessible interfaces to accelerate your hardware development.
+# UNIT BME688 Environmental Sensor 4-in-1
 
 <div align="center">
-  <img src="hardware/resources/board_image.png" width="450px" alt="Development Board">
-  <p><em>[Replace with board name or logo]</em></p>
+  <img src="hardware/resources/unit_top_v_1_0_0_bme688_enviromental_sensor_4_in_1.png" width="450px" alt="Development Board">
+  <p><em></em></p>
+</div>
+
+The **UNIT BME688 Environmental Sensor 4-in-1** is a versatile sensor module that combines temperature, humidity, pressure, and gas sensing capabilities in a single compact package. It utilizes the BME688 sensor from Bosch, which is known for its high accuracy and low power consumption. This module is ideal for applications in environmental monitoring, IoT devices, and smart home systems.
+
+
+## 🔍 Key Sensor Features
+
+Enhance your application with the sensor's robust capabilities:
+
+<div align="center">
+
+| Feature                         | Icon                                                                                         | Description                                                                                |
+|---------------------------------|----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
+| Relative Humidity               | <img src="hardware/resources/img/clouds.gif" width="50" alt="Relative Humidity Icon">         | Accurately measures ambient moisture for precise environmental monitoring.               |
+| Barometric Pressure             | <img src="hardware/resources/img/rain.png" width="50" alt="Barometric Pressure Icon">          | Detects atmospheric pressure changes to support dynamic weather tracking.                |
+| Excellent Temperature Stability | <img src="hardware/resources/img/temperature.gif" width="50" alt="Temperature Stability Icon"> | Delivers consistent temperature readings even under varying conditions.                  |
+| Gas Sensing                     | <img src="hardware/resources/img/gas-leak.gif" width="50" alt="Gas Sensing Icon">              | Monitors a range of gases to help identify potential environmental hazards.              |
+
 </div>
 
 ## 📦 Overview
+<div align="center">
 
-| Feature                 | Description                                                   |
-|------------------------|---------------------------------------------------------------|
-| **Microcontroller**     | [ESP32-S3, RP2040, STM32, etc.]                               |
-| **Connectivity**        | [Wi-Fi, Bluetooth LE, USB, etc.]                              |
-| **I/O Voltage**         | [3.3V / 5V compatible]                                        |
-| **Power Options**       | [USB-C, LiPo Battery, External Vin]                           |
-| **Programming**         | [Arduino IDE, PlatformIO, ESP-IDF, MicroPython, etc.]         |
-| **Expansion**           | [QWIIC, Grove, Header Pins, etc.]                             |
+| Feature                 | Description                      |
+|-------------------------|----------------------------------|
+| Sensor                  | BME688 Environmental Sensor      |
+| Communication Protocol  | I2C and SPI                       |
+| Power Supply            | 1.71V to 3.6V                     |
 
+</div>
 
-## ⚙️ Technical Specifications
-
-- **Microcontroller:** [Insert name and variant]
-- **Core Architecture:** [Xtensa / ARM Cortex-M / RISC-V]
-- **Clock Speed:** [e.g., 240 MHz]
-- **Flash / RAM:** [e.g., 8 MB Flash, 2 MB PSRAM]
-- **Wireless:** [2.4 GHz Wi-Fi, BLE 5.0]
-- **Interfaces:**
-  - UART / I2C / SPI / PWM
-  - USB Device or Host (if supported)
-- **Power:**
-  - Input via USB-C: 5V
-  - Regulated Output: 3.3V
-  - Battery Support: [Yes / No]
-- **Dimensions:** [e.g., 55mm x 25mm]
-
-
-## 🔌 Pinout
-
-Include a diagram like `docs/pinout.png` or describe functionally:
-
-| Pin Label | Function        | Notes                             |
-|-----------|------------------|-----------------------------------|
-| D0–D13    | GPIO             | Digital I/O                       |
-| A0–A7     | ADC              | 12-bit resolution                 |
-| TX / RX   | UART             | Serial communication              |
-| SDA / SCL | I2C              | Compatible with QWIIC modules     |
-| MISO / MOSI / SCK / CS | SPI | Display or Flash expansion       |
-| VCC / GND | Power            | 3.3V logic and power distribution |
 
 ## 🧪 Use Cases
-
-- IoT Sensor Nodes
-- Wearable Devices
-- Environmental Monitoring
-- Educational Electronics
-- Automation Prototyping
-
 
 
 ## 🚀 Getting Started
@@ -67,7 +46,7 @@ Include a diagram like `docs/pinout.png` or describe functionally:
    - Arduino IDE
    - PlatformIO
    - ESP-IDF / Pico SDK
-3. **Flash** a sample project or use one from `/firmware/`
+3. **Flash** a sample project or use one from `/Software/examples`
 4. **Power** via USB or external battery (if supported)
 
 
@@ -80,7 +59,6 @@ Include a diagram like `docs/pinout.png` or describe functionally:
 - [Getting Started Guide](docs/getting_started.md)
 
 
-
 ## 📝 License
 
 All hardware and documentation in this project are licensed under the **MIT License**.  
@@ -89,14 +67,6 @@ Please refer to [`LICENSE.md`](LICENSE.md) for full terms.
 
 
 <div align="center">
-  <sub>Template created by UNIT Electronics • Adapt this file to document your board!</sub>
+  <sub>Template created by UNIT Electronics </sub>
 </div>
 
-### ✅ What You Can Do with This Template:
-
-* Fork it for new development board projects.
-* Fill in specs, pinout, and MCU details.
-* Add images, schematics, and test code.
-
-
-Would you like a downloadable `.zip` of this full structure including placeholder images and files (`hardware/`, `docs/`, `firmware/`, etc.)?
