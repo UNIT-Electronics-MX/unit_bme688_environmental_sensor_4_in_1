@@ -54,7 +54,8 @@
 | Ref. | Description                              |
 |------|------------------------------------------|
 | IC1  | BME688 Environmental Sensor              |
-| L1   | Power On LED                             | 
+| L1   | Power On LED                             |
+| U1   | AP2112K 3V3 Regulator                    | 
 | JP1  | 2.54 mm Castellated Holes                |
 | J1   | QWIIC Connector (JST 1 mm pitch) for I2C |
   
