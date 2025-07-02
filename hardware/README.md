@@ -1,7 +1,9 @@
 # Hardware
 
+<div align="center">
 
 <a href="./unit_sch_V_0_0_1_ue0095_BME688.pdf"><img src="resources/Schematics_icon.jpg?raw=false" width="500px"><br/> Schematics</a>
+</div>
 
 ---
 
@@ -31,12 +33,18 @@
 
 ## 🔌 Pinout
 
+<div align="center">
+    <a href="#"><img src="hardware/resources/charger_pinout.jpg" width="500px"><br/>Pinout</a>
+    <br/>
+    <br/>
 
 
-| Pin Label | Function        | Notes                             |
+| Pin Label | Function         | Notes                             |
 |-----------|------------------|-----------------------------------|
-| VCC       | Power Supply     | 3.3V or 5V                       |
+| VCC       | Power Supply     | 3.3V or 5V                        |
 | GND       | Ground           | Common ground for all components  |
+
+</div>
 
 ## 📏 Dimensions
 
@@ -49,7 +57,9 @@
 <div style="text-align: center;">
 <a href="./resources/unit_topology_v_1_0_0_bme688_environmental_sensor_4_in_1.png"><img src="./resources/unit_topology_v_1_0_0_bme688_environmental_sensor_4_in_1.png" width="500px"><br/> Topology</a>
 </div>
-
+<br/>
+    
+<div align="center">
 
 | Ref. | Description                              |
 |------|------------------------------------------|
@@ -59,3 +69,4 @@
 | JP1  | 2.54 mm Castellated Holes                |
 | J1   | QWIIC Connector (JST 1 mm pitch) for I2C |
   
+</div>
