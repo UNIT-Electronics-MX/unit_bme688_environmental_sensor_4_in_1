@@ -34,7 +34,7 @@
 ## 🔌 Pinout
 
 <div align="center">
-    <a href="#"><img src="hardware/resources/charger_pinout.jpg" width="500px"><br/>Pinout</a>
+    <a href="#"><img src="resources/unit_pinout_v_0_0_1_ue0095_bm3688_4_in_1_en.jpg" width="500px"><br/>Pinout</a>
     <br/>
     <br/>
 
@@ -55,7 +55,7 @@
 ## 📃 Topology
 
 <div style="text-align: center;">
-<a href="./resources/unit_topology_v_1_0_0_bme688_environmental_sensor_4_in_1.png"><img src="./resources/unit_topology_v_1_0_0_bme688_environmental_sensor_4_in_1.png" width="500px"><br/> Topology</a>
+<a href="./resources/unit_topology_v_1_0_0_bme688_environmental_sensor_4_in_1.png"><img src="./resources/unit_topology_v_1_0_0_bme688_environmental_sensor_4_in_1.png" width="450px"><br/> Topology</a>
 </div>
 <br/>
     
