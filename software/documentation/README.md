@@ -14,16 +14,14 @@ Fill in each section without deleting or modifying the existing headings.
 
 # BME688 Environmental Sensor 4-in-1
 
-![Product](../../hardware/resources/unit_top_v_1_0_0_bme688_enviromental_sensor_4_in_1.png) <!-- FILL HERE: replace image if needed -->
+![Product](../../hardware/resources/unit_top_v_1_0_0_bme688_enviromental_sensor_4_in_1.png) 
 
 ## Introduction
 
-<!-- FILL HERE -->
-The **BME688 Environmental Sensor 4-in-1** is a versatile sensor module that combines temperature, humidity, pressure, and gas sensing capabilities in a single compact package. 
+The BME688 Environmental Sensor 4-in-1 is a versatile sensor module that combines temperature, humidity, pressure, and gas sensing capabilities in a single compact package. 
 
 ## Functional Description
 
-<!-- FILL HERE -->
 - Accurately measures ambient moisture for precise environmental monitoring.
 - Detects atmospheric pressure changes to support dynamic weather tracking.
 - Delivers consistent temperature readings even under varying conditions.
@@ -31,46 +29,48 @@ The **BME688 Environmental Sensor 4-in-1** is a versatile sensor module that com
 
 ## Electrical Characteristics & Signal Overview
 
-<!-- FILL HERE -->
-- current draw, logic levels, ADC resolution, touchpad sensitivity
 - Power supply: 1.71V to 3.6V
-- 
+- Low power consumption: sleep < 0.1 µA, typical operation < 3 µA
+
 
 ## Applications
 
-<!-- FILL HERE -->
-- **Environmental Monitoring**: Ideal for tracking air quality, humidity, temperature, and pressure in smart homes and industrial applications.
-- **IoT Devices**: Can be integrated into IoT systems for real-time environmental data collection and analysis.
-- **Weather Stations**: Useful in DIY weather stations for accurate weather forecasting and monitoring.
-- **Smart Agriculture**: Helps in monitoring soil and air conditions to optimize crop growth and yield.
-- **Wearable Devices**: Can be used in health and fitness wearables to monitor
+- Environmental Monitoring: Ideal for tracking air quality, humidity, temperature, and pressure in smart homes and industrial applications.
+- IoT Devices: Can be integrated into IoT systems for real-time environmental data collection and analysis.
+- Weather Stations: Useful in DIY weather stations for accurate weather forecasting and monitoring.
+- Smart Agriculture: Helps in monitoring soil and air conditions to optimize crop growth and yield.
+- Wearable Devices: Can be used in health and fitness wearables to monitor
 
 ## Features
 
-<!-- FILL HERE -->
-- List of main technical features of the microcontroller and board design
+- Temperature measurement: –40 to +85 °C, ±0.5 °C accuracy  
+- Humidity measurement: 0 to 100 % RH, ±3 % accuracy  
+- Barometric pressure: 300 to 1100 hPa, ±1 hPa accuracy  
+- VOC detection: Indoor Air Quality (IAQ) index  
+- Dual interface: I²C (Qwiic) and SPI      
+- Compact form factor: Qwiic connector + standard through-hole pins 
 
 ## Pin & Connector Layout
 
-| Group     | Available Pins | Suggested Use                          |
-|-----------|----------------|----------------------------------------|
-| GPIO      | <!-- FILL -->  | <!-- FILL -->                          |
-| UART      | <!-- FILL -->  | <!-- FILL -->                          |
-| TouchPad  | <!-- FILL -->  | <!-- FILL -->                          |
-| Analog    | <!-- FILL -->  | <!-- FILL -->                          |
-| SPI       | SCK, SDI, SDO  | <!-- FILL -->                          |
-| I²C       | QWIIC Connector  | <!-- FILL -->                          |
+| Group     | Available Pins                                 | Suggested Use                                     |
+|-----------|------------------------------------------------|---------------------------------------------------|
+| GPIO      | –                                              | Not applicable                                    |
+| UART      | –                                              | Not supported                                     |
+| TouchPad  | –                                              | Not supported                                     |
+| Analog    | –                                              | Not supported                                     |
+| SPI       | CSB, SDI (MOSI), SDO (MISO), SCK               | High-speed SPI to read sensor data                |
+| I²C       | SDA, SCL (via Qwiic connector)                 | Standard I²C for configuration & data acquisition |
 
 ## Settings
 
 ### Interface Overview
 
-| Interface  | Signals / Pins               | Typical Use               |
-|------------|------------------------------|---------------------------|
-| UART       | <!-- FILL -->                | <!-- FILL -->             |
-| I2C        | CSB must be connected to VDD | <!-- FILL -->             |
-| SPI        | CSB must be connected to GND | <!-- FILL -->             |
-| USB        | <!-- FILL -->                | <!-- FILL -->             |
+| Interface | Signals / Pins                          | Typical Use                          |
+|-----------|-----------------------------------------|--------------------------------------|
+| UART      | –                                       | Unavailable                          |
+| I²C       | SDA, SCL  (CSB held high)               | Default interface (Qwiic connector)  |
+| SPI       | CSB = GND, SDI (MOSI), SCK, SDO (MISO)  | High-speed alternative               |
+| USB       | –                                       | Unavailable on this module           |
 
 ### Supports
 
@@ -78,11 +78,11 @@ The **BME688 Environmental Sensor 4-in-1** is a versatile sensor module that com
 |--------|-------------|------------------------------------|
 | VCC    | Input       | 3.3V or 5V                         |
 | GND    | GND         | Common ground for all components   |
-| IO     | Bidirectional | <!-- FILL -->                    |
+
 
 ## Block Diagram
 
-![Function Diagram](images/pinout.png) <!-- FILL HERE: replace image if needed -->
+![Function diagram](../../hardware/resources/unit_pinout_v_0_0_1_ue0095_bm3688_4_in_1_en.png) <!-- FILL HERE: replace image if needed -->
 
 ## Dimensions
 
@@ -90,10 +90,13 @@ The **BME688 Environmental Sensor 4-in-1** is a versatile sensor module that com
 
 ## Usage
 
-<!-- FILL HERE -->
-Mention supported development platforms and toolchains 
+This module works with multiple platforms and toolchains:
 
-- (e.g., Arduino IDE, ESP-IDF, PlatformIO, etc.)
+- Arduino IDE (Adafruit BME680/BME688 library)  
+- PlatformIO (Arduino or Espressif frameworks)  
+- Raspberry Pi / Python (Adafruit CircuitPython-BME680)  
+- MicroPython (I²C/SPI firmware)  
+- ESP32 / ESP8266 (Arduino or ESP-IDF)
 
 ## Downloads
 
