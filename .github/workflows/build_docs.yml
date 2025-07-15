@@ -23,14 +23,11 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Install dependencies (Python + Node.js for PDF generation)
+    - name: Install dependencies (Python + Chrome for PDF generation)
       run: |
         sudo apt-get update
-        sudo apt-get install -y nodejs npm chromium-browser
-        pip install -r software/documentation/requirements.txt
-        
-        # Install Puppeteer for HTML to PDF conversion
-        npm install -g puppeteer
+        sudo apt-get install -y chromium-browser
+        pip install -r software/documentation/requirements_minimal.txt
 
     #################################################
     # Generar Professional PDF del Product Brief
@@ -64,32 +61,8 @@ jobs:
         # Crear directorio build si no existe
         mkdir -p build
         
-        # Convertir HTML a PDF usando Puppeteer
-        node -e "
-        const puppeteer = require('puppeteer');
-        (async () => {
-          const browser = await puppeteer.launch({
-            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
-          });
-          const page = await browser.newPage();
-          await page.goto('file://' + process.cwd() + '/build/datasheet_professional.html', {
-            waitUntil: 'networkidle0'
-          });
-          await page.pdf({
-            path: 'build/${REPO_NAME}_product_brief.pdf',
-            format: 'A4',
-            printBackground: true,
-            margin: {
-              top: '12mm',
-              right: '10mm',
-              bottom: '12mm',
-              left: '10mm'
-            }
-          });
-          await browser.close();
-          console.log('PDF generated successfully');
-        })();
-        "
+        # Convertir HTML a PDF usando Chrome directamente
+        chromium-browser --headless --disable-gpu --print-to-pdf=build/${REPO_NAME}_product_brief.pdf --print-to-pdf-no-header --no-margins file://$(pwd)/build/datasheet_professional.html
         
         # Verificar que el PDF se generó
         if [ ! -f "build/${REPO_NAME}_product_brief.pdf" ]; then
