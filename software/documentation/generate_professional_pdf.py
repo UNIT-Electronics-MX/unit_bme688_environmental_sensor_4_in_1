@@ -9,6 +9,7 @@ import os
 import re
 import yaml
 import shutil
+import shutil
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -1476,27 +1477,26 @@ class ProfessionalDatasheetGenerator:
         if os.path.exists(hardware_abs_path):
             for file in os.listdir(hardware_abs_path):
                 file_lower = file.lower()
-                file_path = os.path.join(hardware_abs_path, file)
                 
                 # Solo procesar archivos de imagen
                 if not any(file_lower.endswith(ext) for ext in ['.png', '.jpg', '.jpeg', '.gif', '.bmp']):
                     continue
                 
-                # Mapear archivos por patrones genéricos
+                # Mapear archivos por patrones genéricos usando solo el nombre de archivo
                 if any(pattern in file_lower for pattern in ['topology', 'block_diagram', 'system']):
-                    images['unit_topology'] = file_path
+                    images['unit_topology'] = file
                 elif any(pattern in file_lower for pattern in ['_top', 'top_view', 'topview']) and 'topology' not in file_lower:
-                    images['unit_top'] = file_path
+                    images['unit_top'] = file
                 elif any(pattern in file_lower for pattern in ['_btm', '_bottom', 'bottom_view', 'bottomview']):
-                    images['unit_bottom'] = file_path
+                    images['unit_bottom'] = file
                 elif any(pattern in file_lower for pattern in ['pinout', 'pin_out', 'pins', 'pinmap']):
                     # Preferir inglés, luego español
                     if 'en' in file_lower or not images['unit_pinout']:
-                        images['unit_pinout'] = file_path
+                        images['unit_pinout'] = file
                 elif any(pattern in file_lower for pattern in ['dimension', 'dimensions', 'size', 'mechanical']):
-                    images['unit_dimensions'] = file_path
+                    images['unit_dimensions'] = file
                 elif any(pattern in file_lower for pattern in ['sch', 'schematic', 'circuit']) and '.pdf' not in file_lower:
-                    images['unit_schematic'] = file_path
+                    images['unit_schematic'] = file
         
         return images
 
@@ -1647,6 +1647,41 @@ class ProfessionalDatasheetGenerator:
         html += '</tbody>\n</table>'
         return html
 
+    def copy_images_to_build(self, images):
+        """Copia las imágenes necesarias al directorio build"""
+        build_dir = os.path.join(os.path.dirname(__file__), 'build')
+        hardware_abs_path = os.path.abspath(self.hardware_path)
+        
+        # Asegurar que el directorio build existe
+        os.makedirs(build_dir, exist_ok=True)
+        
+        # Copiar logo
+        logo_path = os.path.join(os.path.dirname(__file__), 'images', 'logo_unit.png')
+        if os.path.exists(logo_path):
+            logo_dest_dir = os.path.join(build_dir, 'images')
+            os.makedirs(logo_dest_dir, exist_ok=True)
+            shutil.copy2(logo_path, os.path.join(logo_dest_dir, 'logo_unit.png'))
+            print(f"📋 Copied logo to build/images/")
+        
+        # Copiar imágenes de hardware que se están usando
+        if os.path.exists(hardware_abs_path):
+            for image_key, image_file in images.items():
+                if image_file:  # Si hay una imagen asignada
+                    source_path = os.path.join(hardware_abs_path, image_file)
+                    if os.path.exists(source_path):
+                        dest_path = os.path.join(build_dir, image_file)
+                        shutil.copy2(source_path, dest_path)
+                        print(f"📋 Copied {image_file} to build/")
+        
+        # Copiar PDFs de esquemáticos
+        if os.path.exists(hardware_abs_path):
+            for file in os.listdir(hardware_abs_path):
+                if 'sch' in file.lower() and file.lower().endswith('.pdf'):
+                    source_path = os.path.join(hardware_abs_path, file)
+                    dest_path = os.path.join(build_dir, file)
+                    shutil.copy2(source_path, dest_path)
+                    print(f"📋 Copied schematic PDF {file} to build/")
+
     def generate_professional_datasheet(self, readme_path, output_path):
         """Genera hoja de datos profesional completa"""
         # Parsear README
@@ -1731,8 +1766,7 @@ class ProfessionalDatasheetGenerator:
         
         # PRODUCT VIEWS - Moved here after introduction
         product_views_available = (
-            (images['unit_top'] and os.path.exists(images['unit_top'])) or
-            (images['unit_bottom'] and os.path.exists(images['unit_bottom']))
+            images['unit_top'] or images['unit_bottom']
         )
         
         if product_views_available:
@@ -1743,7 +1777,7 @@ class ProfessionalDatasheetGenerator:
             '''
             
             # Top View
-            if images['unit_top'] and os.path.exists(images['unit_top']):
+            if images['unit_top']:
                 html += f'''
                         <div class="view-card">
                             <div class="view-title">TOP VIEW</div>
@@ -1753,7 +1787,7 @@ class ProfessionalDatasheetGenerator:
                 '''
             
             # Bottom View (if available)
-            if images['unit_bottom'] and os.path.exists(images['unit_bottom']):
+            if images['unit_bottom']:
                 html += f'''
                         <div class="view-card">
                             <div class="view-title">BOTTOM VIEW</div>
@@ -1899,12 +1933,12 @@ class ProfessionalDatasheetGenerator:
         
         # SECTION 2: ALL VISUAL CONTENT AT THE END - Only if we have images
         has_images = any([
-            images['unit_pinout'] and os.path.exists(images['unit_pinout']),
-            images['unit_dimensions'] and os.path.exists(images['unit_dimensions']),
-            images['unit_top'] and os.path.exists(images['unit_top']),
-            images['unit_bottom'] and os.path.exists(images['unit_bottom']),
-            images['unit_topology'] and os.path.exists(images['unit_topology']),
-            images['unit_schematic'] and os.path.exists(images['unit_schematic'])
+            images['unit_pinout'],
+            images['unit_dimensions'],
+            images['unit_top'],
+            images['unit_bottom'],
+            images['unit_topology'],
+            images['unit_schematic']
         ])
         
         if has_images:
@@ -1921,7 +1955,7 @@ class ProfessionalDatasheetGenerator:
             '''
             
             # Dimensions - LARGE
-            if images['unit_dimensions'] and os.path.exists(images['unit_dimensions']):
+            if images['unit_dimensions']:
                 html += f'''
                             <div class="dimensions-section">
                                 <div class="section-header">MECHANICAL DIMENSIONS</div>
@@ -1933,9 +1967,9 @@ class ProfessionalDatasheetGenerator:
                 '''
             # Additional Technical Documentation - Only if available
             additional_images = []
-            if images['unit_topology'] and os.path.exists(images['unit_topology']):
+            if images['unit_topology']:
                 additional_images.append(('unit_topology', 'System Topology', 'Connection topology and system integration'))
-            if images['unit_schematic'] and os.path.exists(images['unit_schematic']):
+            if images['unit_schematic']:
                 additional_images.append(('unit_schematic', 'Circuit Schematic', 'Detailed circuit schematic diagram'))
                 
             if additional_images:
@@ -1954,7 +1988,7 @@ class ProfessionalDatasheetGenerator:
                         if os.path.exists(hardware_abs_path):
                             for file in os.listdir(hardware_abs_path):
                                 if 'sch' in file.lower() and file.lower().endswith('.pdf'):
-                                    schematic_pdf = os.path.join(hardware_abs_path, file)
+                                    schematic_pdf = file  # Solo usar el nombre del archivo
                                     break
                         
                         html += f'''
@@ -1963,7 +1997,7 @@ class ProfessionalDatasheetGenerator:
                                         <img src="{images[img_key]}" alt="{title}" class="topology-image">
                                         <div class="doc-caption">{description}</div>
                         '''
-                        if schematic_pdf and os.path.exists(schematic_pdf):
+                        if schematic_pdf:
                             html += f'''
                                         <div class="doc-link">
                                             <a href="{schematic_pdf}" target="_blank" class="schematic-link">
@@ -2108,7 +2142,7 @@ class ProfessionalDatasheetGenerator:
             '''
         
         # PINOUT PAGE - INDEPENDENT AT THE END
-        if images['unit_pinout'] and os.path.exists(images['unit_pinout']):
+        if images['unit_pinout']:
             html += f'''
                 <!-- PINOUT PAGE - INDEPENDENT SECTION -->
                 <div class="pinout-page">
@@ -2169,6 +2203,9 @@ class ProfessionalDatasheetGenerator:
         # Guardar archivo
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(html)
+        
+        # Copiar imágenes necesarias al directorio build
+        self.copy_images_to_build(images)
         
         return output_path
 
