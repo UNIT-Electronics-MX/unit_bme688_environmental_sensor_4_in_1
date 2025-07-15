@@ -3,7 +3,7 @@ title: "BME688 Environmental Sensor 4-in-1"
 version: "1.0"
 modified: "2025-04-30"
 output: "bme688_environmental_sensor_4-in-1"
-subtitle: "Versatile sensor module"
+subtitle: "The sensor module for professional environmental monitoring"
 ---
 
 <!--
@@ -18,7 +18,9 @@ Fill in each section without deleting or modifying the existing headings.
 
 ## Introduction
 
-The BME688 Environmental Sensor 4-in-1 is a versatile sensor module that combines temperature, humidity, pressure, and gas sensing capabilities in a single compact package. 
+The BME688 Environmental Sensor 4-in-1 is an advanced, high-precision sensor module designed for professional environmental monitoring applications. Built around Bosch's industry-leading BME688 sensor, this module delivers exceptional accuracy and reliability for temperature, humidity, pressure, and gas detection in a single, compact form factor.
+
+This professional-grade sensor module is engineered for demanding applications requiring precise environmental data collection. With its dual communication interfaces and ultra-low power consumption, it's ideal for battery-powered IoT devices, industrial monitoring systems, and research applications where accuracy and reliability are paramount. 
 
 ## Functional Description
 
@@ -29,9 +31,9 @@ The BME688 Environmental Sensor 4-in-1 is a versatile sensor module that combine
 
 ## Electrical Characteristics & Signal Overview
 
-- Power supply: 1.71V to 3.6V
+- Power supply: 1.71V to 3.6V Sensor Supply Voltage
 - Low power consumption: sleep < 0.1 µA, typical operation < 3 µA
-
+- Communication interfaces: I²C (Qwiic) and SPI
 
 ## Applications
 
@@ -54,10 +56,6 @@ The BME688 Environmental Sensor 4-in-1 is a versatile sensor module that combine
 
 | Group     | Available Pins                                 | Suggested Use                                     |
 |-----------|------------------------------------------------|---------------------------------------------------|
-| GPIO      | –                                              | Not applicable                                    |
-| UART      | –                                              | Not supported                                     |
-| TouchPad  | –                                              | Not supported                                     |
-| Analog    | –                                              | Not supported                                     |
 | SPI       | CSB, SDI (MOSI), SDO (MISO), SCK               | High-speed SPI to read sensor data                |
 | I²C       | SDA, SCL (via Qwiic connector)                 | Standard I²C for configuration & data acquisition |
 
@@ -94,19 +92,14 @@ This module works with multiple platforms and toolchains:
 
 - Arduino IDE (Adafruit BME680/BME688 library)  
 - PlatformIO (Arduino or Espressif frameworks)  
-- Raspberry Pi / Python (Adafruit CircuitPython-BME680)  
-- MicroPython (I²C/SPI firmware)  
-- ESP32 / ESP8266 (Arduino or ESP-IDF)
+
 
 ## Downloads
 
-<!-- FILL HERE -->
-- [Schematic PDF](docs/schematic.pdf)
-- [Board Dimensions DXF](docs/dimensions.dxf)
-- [Pinout Diagram PNG](docs/pinout.png)
+-
 
 ## Purchase
 
 <!-- FILL HERE -->
-- [Buy from vendor](https://example.com)
-- [Product page](https://example.com/product/template-board)
+- [Buy from vendor](https://uelectronics.com/)
+- [Product page](https://unit-electronics-mx.github.io/wiki_uelectronics/es/docs/Sensors/bme688)

@@ -23,26 +23,74 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Install dependencies (Python + LaTeX + Ghostscript)
+    - name: Install dependencies (Python + Node.js for PDF generation)
       run: |
         sudo apt-get update
-        sudo apt-get install -y texlive-latex-extra texlive-fonts-recommended texlive-lang-english ghostscript latexmk
+        sudo apt-get install -y nodejs npm chromium-browser
         pip install -r software/documentation/requirements.txt
         pip install -r software/sphinx/requirements.txt
+        
+        # Install Puppeteer for HTML to PDF conversion
+        npm install -g puppeteer
 
     #################################################
-    # Generar PDF del Product Brief con nombre del repo
+    # Generar Professional PDF del Product Brief
     #################################################
-    - name: Build LaTeX PDF from README
+    - name: Build Professional PDF from README
       working-directory: software/documentation
       env:
         REPO_NAME: ${{ github.event.repository.name }}
       run: |
-        python test_readme.py
-        python generate_pdf.py
-        gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer \
-           -dNOPAUSE -dQUIET -dBATCH \
-           -sOutputFile=build/${REPO_NAME}_product_brief.pdf build/*.pdf
+        # Verificar que los archivos necesarios existen
+        ls -la ../../README.md
+        ls -la ../../hardware/resources/ || echo "Hardware resources directory not found"
+        
+        # Generar HTML profesional
+        python generate_professional_pdf.py
+        
+        # Verificar que el HTML se generó correctamente
+        if [ ! -f "professional_datasheet.html" ]; then
+          echo "Error: professional_datasheet.html not generated"
+          exit 1
+        fi
+        
+        # Crear directorio build si no existe
+        mkdir -p build
+        
+        # Convertir HTML a PDF usando Puppeteer
+        node -e "
+        const puppeteer = require('puppeteer');
+        (async () => {
+          const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+          });
+          const page = await browser.newPage();
+          await page.goto('file://' + process.cwd() + '/professional_datasheet.html', {
+            waitUntil: 'networkidle0'
+          });
+          await page.pdf({
+            path: 'build/${REPO_NAME}_product_brief.pdf',
+            format: 'A4',
+            printBackground: true,
+            margin: {
+              top: '12mm',
+              right: '10mm',
+              bottom: '12mm',
+              left: '10mm'
+            }
+          });
+          await browser.close();
+          console.log('PDF generated successfully');
+        })();
+        "
+        
+        # Verificar que el PDF se generó
+        if [ ! -f "build/${REPO_NAME}_product_brief.pdf" ]; then
+          echo "Error: PDF not generated"
+          exit 1
+        fi
+        
+        echo "Professional datasheet generated successfully"
 
     #################################################
     # Generar Documentación Sphinx (HTML + PDF)
@@ -63,8 +111,23 @@ jobs:
         rm -rf docs
         mkdir -p docs
 
-        # PDF generado desde LaTeX
+        # PDF profesional generado desde HTML
         cp software/documentation/build/${REPO_NAME}_product_brief.pdf docs/
+
+        # HTML profesional para visualización web
+        cp software/documentation/professional_datasheet.html docs/
+
+        # Copiar imágenes necesarias para el HTML
+        mkdir -p docs/images
+        if [ -f "software/documentation/images/logo_unit.png" ]; then
+          cp software/documentation/images/logo_unit.png docs/images/
+        fi
+        
+        # Copiar imágenes de hardware si existen
+        if [ -d "hardware/resources" ]; then
+          # Copiar todas las imágenes de hardware manteniendo estructura
+          find hardware/resources -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.pdf" \) -exec cp {} docs/ \; 2>/dev/null || true
+        fi
 
         # PDF generado por Sphinx
         cp software/sphinx/pdf/programmer.pdf docs/${REPO_NAME}_sphinx.pdf
@@ -85,5 +148,5 @@ jobs:
         git config --global user.email "actions@github.com"
         git pull origin main
         git add docs/
-        git commit -m "Deploy full documentation and product brief [skip ci]" || echo "No changes"
+        git commit -m "Deploy professional documentation and product brief [skip ci]" || echo "No changes"
         git push origin main
