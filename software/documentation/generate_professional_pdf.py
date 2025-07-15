@@ -1506,13 +1506,26 @@ class ProfessionalDatasheetGenerator:
                 elif any(pattern in file_lower for pattern in ['_btm', '_bottom', 'bottom_view', 'bottomview']):
                     images['unit_bottom'] = file
                 elif any(pattern in file_lower for pattern in ['pinout', 'pin_out', 'pins', 'pinmap']):
-                    # Preferir inglés, luego español
-                    if 'en' in file_lower or not images['unit_pinout']:
+                    # Preferir PNG sobre JPG, luego inglés sobre español
+                    current_pinout = images['unit_pinout']
+                    should_replace = False
+                    
+                    if not current_pinout:
+                        should_replace = True
+                    elif file.lower().endswith('.png') and current_pinout.lower().endswith('.jpg'):
+                        should_replace = True  # Preferir PNG sobre JPG
+                    elif 'en' in file_lower and 'es' in current_pinout.lower():
+                        should_replace = True  # Preferir inglés sobre español
+                    elif file.lower().endswith('.png') and current_pinout.lower().endswith('.png') and 'en' in file_lower:
+                        should_replace = True  # Entre PNGs, preferir inglés
+                    
+                    if should_replace:
                         images['unit_pinout'] = file
                 elif any(pattern in file_lower for pattern in ['dimension', 'dimensions', 'size', 'mechanical']):
                     images['unit_dimensions'] = file
                 elif any(pattern in file_lower for pattern in ['sch', 'schematic', 'circuit']) and '.pdf' not in file_lower:
                     images['unit_schematic'] = file
+        
         
         return images
 
