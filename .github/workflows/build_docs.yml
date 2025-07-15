@@ -28,7 +28,6 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y nodejs npm chromium-browser
         pip install -r software/documentation/requirements.txt
-        pip install -r software/sphinx/requirements.txt
         
         # Install Puppeteer for HTML to PDF conversion
         npm install -g puppeteer
@@ -45,12 +44,20 @@ jobs:
         ls -la ../../README.md
         ls -la ../../hardware/resources/ || echo "Hardware resources directory not found"
         
+        # Copiar imágenes necesarias al directorio de trabajo
+        mkdir -p images
+        if [ -f "images/logo_unit.png" ]; then
+          echo "Logo found in documentation/images/"
+        else
+          echo "Warning: Logo not found"
+        fi
+        
         # Generar HTML profesional
         python generate_professional_pdf.py
         
         # Verificar que el HTML se generó correctamente
-        if [ ! -f "professional_datasheet.html" ]; then
-          echo "Error: professional_datasheet.html not generated"
+        if [ ! -f "build/datasheet_professional.html" ]; then
+          echo "Error: datasheet_professional.html not generated"
           exit 1
         fi
         
@@ -65,7 +72,7 @@ jobs:
             args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
           });
           const page = await browser.newPage();
-          await page.goto('file://' + process.cwd() + '/professional_datasheet.html', {
+          await page.goto('file://' + process.cwd() + '/build/datasheet_professional.html', {
             waitUntil: 'networkidle0'
           });
           await page.pdf({
@@ -93,15 +100,6 @@ jobs:
         echo "Professional datasheet generated successfully"
 
     #################################################
-    # Generar Documentación Sphinx (HTML + PDF)
-    #################################################
-    - name: Build Sphinx Documentation
-      working-directory: software/sphinx
-      run: |
-        make clean
-        make pdfx
-
-    #################################################
     # Preparar contenido para docs/
     #################################################
     - name: Prepare docs/ directory
@@ -115,7 +113,10 @@ jobs:
         cp software/documentation/build/${REPO_NAME}_product_brief.pdf docs/
 
         # HTML profesional para visualización web
-        cp software/documentation/professional_datasheet.html docs/
+        cp software/documentation/build/datasheet_professional.html docs/
+        
+        # Crear índice principal que redirija al datasheet
+        echo "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Product Documentation</title><meta http-equiv=\"refresh\" content=\"0; url=datasheet_professional.html\"></head><body><p>Redirecting to <a href=\"datasheet_professional.html\">professional datasheet</a>...</p></body></html>" > docs/index.html
 
         # Copiar imágenes necesarias para el HTML
         mkdir -p docs/images
@@ -123,17 +124,11 @@ jobs:
           cp software/documentation/images/logo_unit.png docs/images/
         fi
         
-        # Copiar imágenes de hardware si existen
+        # Copiar imágenes de hardware manteniendo nombres de archivo
         if [ -d "hardware/resources" ]; then
-          # Copiar todas las imágenes de hardware manteniendo estructura
-          find hardware/resources -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.pdf" \) -exec cp {} docs/ \; 2>/dev/null || true
+          find hardware/resources -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" \) -exec cp {} docs/ \; 2>/dev/null || true
+          find hardware/resources -type f -iname "*.pdf" -exec cp {} docs/ \; 2>/dev/null || true
         fi
-
-        # PDF generado por Sphinx
-        cp software/sphinx/pdf/programmer.pdf docs/${REPO_NAME}_sphinx.pdf
-
-        # HTML generado por Sphinx
-        cp -r software/sphinx/docs/* docs/
 
         # Permitir archivos especiales en GitHub Pages
         touch docs/.nojekyll
