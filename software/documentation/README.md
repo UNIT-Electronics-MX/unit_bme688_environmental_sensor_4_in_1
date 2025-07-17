@@ -17,6 +17,7 @@ Fill in each section without deleting or modifying the existing headings.
 ![Product](../../hardware/resources/unit_top_v_1_0_0_bme688_enviromental_sensor_4_in_1.png) 
 
 
+
 ## Pin & Connector Layout
 
 | Group     | Available Pins                                 | Suggested Use                                     |
