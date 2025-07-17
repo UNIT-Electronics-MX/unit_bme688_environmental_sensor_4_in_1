@@ -38,8 +38,8 @@ The module features digital communication via I²C or SPI interfaces, ensuring s
 - **Power Consumption:** Optimized for low power usage, making it ideal for battery-operated devices.
 - **Interfaces:** I²C and SPI
 - **Input Voltage via VCC Pin:** 3.6–6.0 V (through onboard voltage regulator)
-
-
+- **Operating Voltage (VDD / VDDIO):** 3.3 V (regulated internal voltage for sensor operation)  
+- **Supply Current:** 3.6 µA (typical in low-power mode)
 ## Applications
 
 | Application            | Description                                                                                      |
