@@ -11,6 +11,7 @@ The **BME688 Environmental Sensor 4-in-1** is a versatile sensor module that com
 </div>
 
 
+## Additional Resources
 
 <div align="center">
 
