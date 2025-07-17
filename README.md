@@ -25,20 +25,13 @@ The **BME688 Environmental Sensor 4-in-1** is a versatile sensor module that com
 </div>
 
 
-## 🔍 Key Sensor Features
+## Key Features
 
-Enhance your application with the sensor's robust capabilities:
 
-<div align="center">
-
-| Feature                         | Icon                                                                                         | Description                                                                                |
-|---------------------------------|----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
-| Relative Humidity               | <img src="hardware/resources/img/clouds.gif" width="50" alt="Relative Humidity Icon">         | Accurately measures ambient moisture for precise environmental monitoring.               |
-| Barometric Pressure             | <img src="hardware/resources/img/rain.png" width="50" alt="Barometric Pressure Icon">          | Detects atmospheric pressure changes to support dynamic weather tracking.                |
-| Excellent Temperature Stability | <img src="hardware/resources/img/temperature.gif" width="50" alt="Temperature Stability Icon"> | Delivers consistent temperature readings even under varying conditions.                  |
-| Gas Sensing                     | <img src="hardware/resources/img/gas-leak.gif" width="50" alt="Gas Sensing Icon">              | Monitors a range of gases to help identify potential environmental hazards.              |
-
-</div>
+- **Relative Humidity**: Accurately measures ambient moisture for precise environmental monitoring.
+- **Barometric Pressure**: Detects atmospheric pressure changes to support dynamic weather tracking.
+- **Excellent Temperature Stability**: Delivers consistent temperature readings even under varying conditions.
+- **Gas Sensing**: Monitors a range of gases to help identify potential environmental hazards.
 
 ## TECHNICAL FEATURES
 
