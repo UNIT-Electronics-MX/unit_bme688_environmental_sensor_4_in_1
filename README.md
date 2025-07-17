@@ -40,7 +40,8 @@ Enhance your application with the sensor's robust capabilities:
 
 </div>
 
-## 📦 Overview
+## TECHNICAL FEATURES
+
 <div align="center">
 
 | Feature                 | Description                      |
