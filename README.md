@@ -27,6 +27,14 @@ The module features digital communication via I²C or SPI interfaces, ensuring s
 
 </div>
 
+## Key Technical Specifications
+
+- Operating Voltage: 1.8V to 3.6V
+- Supply Current: 170µA (typ)
+- Operating Temperature: -40°C to +85°C
+- Measurement Range: ±1300 µT
+- Resolution: 0.3 µT
+- Interfaces: I²C and SPI
 
 ## Key Features
 
@@ -38,8 +46,7 @@ The module features digital communication via I²C or SPI interfaces, ensuring s
 - **Power Consumption:** Optimized for low power usage, making it ideal for battery-operated devices.
 - **Interfaces:** I²C and SPI
 - **Input Voltage via VCC Pin:** 3.6–6.0 V (through onboard voltage regulator)
-- **Operating Voltage (VDD / VDDIO):** 3.3 V (regulated internal voltage for sensor operation)  
-- **Supply Current:** 3.6 µA (typical in low-power mode)
+
 ## Applications
 
 | Application            | Description                                                                                      |
