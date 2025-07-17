@@ -1,4 +1,3 @@
-
 # BME688 Environmental Sensor 4-in-1
 
 ## Introduction
@@ -33,37 +32,18 @@ The **BME688 Environmental Sensor 4-in-1** is a versatile sensor module that com
 - **Excellent Temperature Stability**: Delivers consistent temperature readings even under varying conditions.
 - **Gas Sensing**: Monitors a range of gases to help identify potential environmental hazards.
 
-## TECHNICAL FEATURES
 
-<div align="center">
+## Applications
 
-| Feature                 | Description                      |
-|-------------------------|----------------------------------|
-| Sensor                  | BME688 Environmental Sensor      |
-| Communication Protocol  | I2C and SPI                       |
-| Power Supply            | 1.71V to 3.6V                     |
-
-</div>
-
-
-## 🧪 Use Cases
-
-- **Environmental Monitoring**: Ideal for tracking air quality, humidity, temperature, and pressure in smart homes and industrial applications.
-- **IoT Devices**: Can be integrated into IoT systems for real-time environmental data collection and analysis.
-- **Weather Stations**: Useful in DIY weather stations for accurate weather forecasting and monitoring.
-- **Smart Agriculture**: Helps in monitoring soil and air conditions to optimize crop growth and yield.
-- **Wearable Devices**: Can be used in health and fitness wearables to monitor
+| Application            | Description                                                                                      |
+|------------------------|--------------------------------------------------------------------------------------------------|
+| Environmental Monitoring | Tracks air quality, humidity, temperature, and pressure in smart homes and industrial settings. |
+| IoT Devices            | Integrates into IoT systems for real-time environmental data collection and analysis.            |
+| Weather Stations       | Enables accurate weather forecasting and monitoring in DIY weather station projects.              |
+| Smart Agriculture      | Monitors soil and air conditions to optimize crop growth and yield.                              |
+| Wearable Devices       | Supports health and fitness wearables for environmental parameter monitoring.                    |
 
 
-## 🚀 Getting Started
-
-1. **Connect** the board via USB-C to your computer.
-2. **Install** the appropriate board package for:
-   - Arduino IDE
-   - PlatformIO
-   - ESP-IDF / Pico SDK
-3. **Flash** a sample project or use one from `/Software/examples`
-4. **Power** via USB or external battery (if supported)
 
 
 ## 📚 Resources
