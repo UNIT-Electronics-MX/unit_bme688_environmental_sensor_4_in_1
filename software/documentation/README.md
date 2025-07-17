@@ -16,41 +16,6 @@ Fill in each section without deleting or modifying the existing headings.
 
 ![Product](../../hardware/resources/unit_top_v_1_0_0_bme688_enviromental_sensor_4_in_1.png) 
 
-## Introduction
-
-The BME688 Environmental Sensor 4-in-1 is an advanced, high-precision sensor module designed for professional environmental monitoring applications. Built around Bosch's industry-leading BME688 sensor, this module delivers exceptional accuracy and reliability for temperature, humidity, pressure, and gas detection in a single, compact form factor.
-
-This professional-grade sensor module is engineered for demanding applications requiring precise environmental data collection. With its dual communication interfaces and ultra-low power consumption, it's ideal for battery-powered IoT devices, industrial monitoring systems, and research applications where accuracy and reliability are paramount. 
-
-## Functional Description
-
-- Accurately measures ambient moisture for precise environmental monitoring.
-- Detects atmospheric pressure changes to support dynamic weather tracking.
-- Delivers consistent temperature readings even under varying conditions.
-- Monitors a range of gases to help identify potential environmental hazards.
-
-## Electrical Characteristics & Signal Overview
-
-- Power supply: 1.71V to 3.6V Sensor Supply Voltage
-- Low power consumption: sleep < 0.1 µA, typical operation < 3 µA
-- Communication interfaces: I²C (Qwiic) and SPI
-
-## Applications
-
-- Environmental Monitoring: Ideal for tracking air quality, humidity, temperature, and pressure in smart homes and industrial applications.
-- IoT Devices: Can be integrated into IoT systems for real-time environmental data collection and analysis.
-- Weather Stations: Useful in DIY weather stations for accurate weather forecasting and monitoring.
-- Smart Agriculture: Helps in monitoring soil and air conditions to optimize crop growth and yield.
-- Wearable Devices: Can be used in health and fitness wearables to monitor
-
-## Features
-
-- Temperature measurement: –40 to +85 °C, ±0.5 °C accuracy  
-- Humidity measurement: 0 to 100 % RH, ±3 % accuracy  
-- Barometric pressure: 300 to 1100 hPa, ±1 hPa accuracy  
-- VOC detection: Indoor Air Quality (IAQ) index  
-- Dual interface: I²C (Qwiic) and SPI      
-- Compact form factor: Qwiic connector + standard through-hole pins 
 
 ## Pin & Connector Layout
 
@@ -85,21 +50,3 @@ This professional-grade sensor module is engineered for demanding applications r
 ## Dimensions
 
 ![Dimensions](../../hardware/resources/unit_dimension_v_1_0_0_bme688_environmental_sensor_4_in_1.png) <!-- FILL HERE: replace image if needed -->
-
-## Usage
-
-This module works with multiple platforms and toolchains:
-
-- Arduino IDE (Adafruit BME680/BME688 library)  
-- PlatformIO (Arduino or Espressif frameworks)  
-
-
-## Downloads
-
--
-
-## Purchase
-
-<!-- FILL HERE -->
-- [Buy from vendor](https://uelectronics.com/)
-- [Product page](https://unit-electronics-mx.github.io/wiki_uelectronics/es/docs/Sensors/bme688)

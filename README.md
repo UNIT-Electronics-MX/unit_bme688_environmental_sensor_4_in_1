@@ -1,6 +1,7 @@
 
 # BME688 Environmental Sensor 4-in-1
 
+## Introduction
 
 The **BME688 Environmental Sensor 4-in-1** is a versatile sensor module that combines temperature, humidity, pressure, and gas sensing capabilities in a single compact package. It utilizes the BME688 sensor from Bosch, which is known for its high accuracy and low power consumption. This module is ideal for applications in environmental monitoring, IoT devices, and smart home systems.
 
