@@ -35,6 +35,9 @@ The module features digital communication via I²C or SPI interfaces, ensuring s
 - **Barometric Pressure**: Detects atmospheric pressure changes to support dynamic weather tracking.
 - **Excellent Temperature Stability**: Delivers consistent temperature readings even under varying conditions.
 - **Gas Sensing**: Monitors a range of gases to help identify potential environmental hazards.
+- **Power Consumption:** Optimized for low power usage, making it ideal for battery-operated devices.
+- **Interfaces:** I²C and SPI
+- **Input Voltage via VCC Pin:** 3.6–6.0 V (through onboard voltage regulator)
 
 
 ## Applications
