@@ -313,9 +313,9 @@
             border-radius: 0 8px 8px 0;
         }
         
-        /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - Force page break */
+        /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - No page break */
         .additional-sections {
-            page-break-before: always !important;
+            page-break-before: avoid !important;
             page-break-inside: avoid !important;
             margin: 20px 0;
             min-height: 100px;
@@ -375,18 +375,11 @@
         
         /* ESTILOS ESPECÍFICOS PARA PINOUT */
         .pinout-table .pin-number {
-            background: #6b7280 !important;
-            color: white !important;
+            color: #374151 !important;
             font-weight: bold;
             text-align: center;
             font-size: 10pt;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
+            padding: 8px;
         }
         
         .pinout-table .pin-name {
@@ -471,6 +464,118 @@
             font-size: 10pt;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             line-height: 1.4;
+        }
+
+        /* TABLES SECTION */
+        .tables-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            page-break-before: avoid;
+        }
+
+        .table-container {
+            margin-bottom: 20px;
+        }
+
+        .table-title {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .technical-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 9pt;
+            background: white;
+        }
+
+        .technical-table thead {
+            background: #f3f4f6;
+        }
+
+        .technical-table th {
+            padding: 8px 12px;
+            text-align: left;
+            font-weight: bold;
+            color: #1f2937;
+            border: 1px solid #d1d5db;
+        }
+
+        .technical-table td {
+            padding: 6px 12px;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            line-height: 1.4;
+        }
+
+        .technical-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        /* PINOUT TABLE STYLES */
+        .pinout-table-section {
+            margin: 20px 0;
+            background: #f0fdf4;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .pinout-table-section .table-title {
+            margin-bottom: 10px;
+            color: #059669;
+            font-size: 14pt;
+            font-weight: bold;
+        }
+
+        .pinout-table-section table {
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* COMPONENTS TABLE STYLES */
+        .components-table-section {
+            margin: 20px 0;
+            background: #f0fdf4;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .components-table-section .table-title {
+            margin-bottom: 10px;
+            color: #059669;
+        }
+
+        /* APPLICATIONS TABLE STYLES */
+        .applications table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 10pt;
+        }
+
+        .applications th {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            border: 1px solid #f59e0b;
+        }
+
+        .applications td {
+            padding: 8px 10px;
+            border: 1px solid #f59e0b;
+            line-height: 1.4;
+        }
+
+        .applications tr:nth-child(even) {
+            background: #fffbeb;
         }
         
         .app-title {
@@ -633,11 +738,41 @@
                 page-break-after: avoid;
             }
             
-            /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - Nueva página */
+            /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - No page break */
             .additional-sections {
-                page-break-before: always;
+                page-break-before: avoid;
                 page-break-inside: avoid;
                 margin: 5mm 0;
+            }
+            
+            /* TOPOLOGY SECTION - LARGE IMAGE */
+            .topology-section {
+                page-break-inside: avoid;
+                page-break-before: auto;
+                margin: 5mm 0;
+                padding: 5mm;
+            }
+            
+            .topology-image-large {
+                max-width: 170mm !important;
+                height: auto;
+                padding: 3mm;
+                margin: 3mm auto;
+            }
+            
+            /* SCHEMATIC SECTION - PAGE BREAK */
+            .schematic-section {
+                page-break-before: always !important;
+                page-break-inside: avoid;
+                margin: 5mm 0;
+                padding: 5mm;
+            }
+            
+            .schematic-image {
+                max-width: 80mm !important;
+                height: auto;
+                padding: 3mm;
+                margin: 3mm auto;
             }
             
             .features-grid, .applications-grid {
@@ -919,7 +1054,14 @@
             }
             
             .topology-image {
-                max-width: 80mm;
+                max-width: 120mm !important;
+                height: auto;
+            }
+            
+            /* Preserve links in PDF */
+            .image-link {
+                display: inline-block !important;
+                text-decoration: none !important;
             }
             
             .product-details-section {
@@ -1086,7 +1228,7 @@
         
         .topology-image {
             width: 100%;
-            max-width: 450px;
+            max-width: 650px;
             height: auto;
             object-fit: contain;
             border-radius: 6px;
@@ -1094,6 +1236,86 @@
             padding: 8px;
             display: block;
             margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .topology-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Estilo para enlaces de imágenes */
+        .image-link {
+            display: inline-block;
+            text-decoration: none;
+            border: none;
+        }
+        
+        .image-link:hover .topology-image {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* TOPOLOGY SECTION - STANDALONE WITH LARGE IMAGE */
+        .topology-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            page-break-inside: avoid;
+        }
+        
+        .topology-image-large {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            padding: 15px;
+            display: block;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .topology-image-large:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* SCHEMATIC SECTION - STANDALONE WITH PAGE BREAK */
+        .schematic-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            page-break-before: always;
+            page-break-inside: avoid;
+        }
+        
+        .schematic-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            padding: 15px;
+            display: block;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .schematic-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
         
         .detail-image {
@@ -1226,7 +1448,7 @@
         /* PINOUT PAGE STYLES - OPTIMIZED FOR A4 */
         .pinout-page {
             page-break-before: always;
-            page-break-after: always;
+            page-break-after: avoid;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -1288,11 +1510,11 @@
         @media print {
             .pinout-page {
                 width: 210mm !important;
-                height: 297mm !important;
+                height: auto !important;
                 margin: 0 !important;
                 padding: 8mm !important;
                 page-break-before: always !important;
-                page-break-after: always !important;
+                page-break-after: avoid !important;
                 page-break-inside: avoid !important;
                 box-sizing: border-box !important;
                 background: white !important;
@@ -1331,6 +1553,55 @@
             .pinout-page-caption {
                 font-size: 12pt !important;
                 margin-top: 10px !important;
+            }
+        }
+        
+        /* PIN DESCRIPTION PAGE - SEPARATE PAGE FOR TABLE */
+        .pin-description-page {
+            page-break-before: always;
+            page-break-after: avoid;
+            min-height: 100vh;
+            padding: 40px;
+            background: white;
+        }
+        
+        /* PINOUT LAYOUT PAGE - SEPARATE PAGE FOR IMAGE */
+        .pinout-layout-page {
+            page-break-before: always;
+            page-break-after: avoid;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        /* A4 PRINT OPTIMIZATION FOR NEW PIN PAGES */
+        @media print {
+            .pin-description-page {
+                width: 210mm !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 15mm !important;
+                page-break-before: always !important;
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+                box-sizing: border-box !important;
+                background: white !important;
+            }
+            
+            .pinout-layout-page {
+                width: 210mm !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 8mm !important;
+                page-break-before: always !important;
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+                box-sizing: border-box !important;
+                background: white !important;
             }
         }
         
@@ -1455,26 +1726,352 @@
             display: inline-block;
             background: #374151;
             color: white;
-            padding: 8px 15px;
-            border-radius: 6px;
+            padding: 12px 20px;
+            border-radius: 8px;
             text-decoration: none;
-            font-size: 9pt;
-            font-weight: 500;
+            font-size: 12pt;
+            font-weight: 600;
             transition: all 0.3s ease;
             border: 2px solid #374151;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .schematic-link:hover {
             background: white;
             color: #374151;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* ESTILOS ESPECÍFICOS PARA VISUALIZACIÓN WEB */
+        @media screen {
+            body {
+                background: #f8fafc;
+                padding: 20px;
+            }
+            
+            .container {
+                max-width: 1200px;
+                background: white;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                border-radius: 12px;
+                overflow: hidden;
+            }
+            
+            .header {
+                border-bottom: 3px solid #e5e7eb;
+            }
+            
+            .key-specs {
+                margin: 20px;
+                border: 1px solid #e5e7eb;
+            }
+            
+            .images-section {
+                margin: 20px;
+                border: 1px solid #e5e7eb;
+            }
+            
+            .visual-content {
+                margin: 20px;
+                padding: 20px;
+                background: #f9fafb;
+                border-radius: 8px;
+            }
+            
+            .pin-description-page {
+                margin: 20px;
+                padding: 30px;
+                background: white;
+                border-radius: 8px;
+                border: 1px solid #e5e7eb;
+                min-height: auto;
+                page-break-before: unset;
+                page-break-after: unset;
+            }
+            
+            .pinout-layout-page {
+                margin: 20px;
+                padding: 30px;
+                background: white;
+                border-radius: 8px;
+                border: 1px solid #e5e7eb;
+                min-height: auto;
+                page-break-before: unset;
+                page-break-after: unset;
+            }
+            
+            .pinout-page {
+                margin: 20px;
+                padding: 30px;
+                background: white;
+                border-radius: 8px;
+                border: 1px solid #e5e7eb;
+                min-height: auto;
+                page-break-before: unset;
+                page-break-after: unset;
+            }
+            
+            /* Estilos específicos para títulos de pinout en web */
+            .pinout-page-title {
+                font-size: 24pt !important;
+                color: #374151 !important;
+                text-align: center !important;
+                margin-bottom: 15px !important;
+                padding-bottom: 10px !important;
+                border-bottom: 2px solid #374151 !important;
+                text-transform: uppercase !important;
+                letter-spacing: 1px !important;
+            }
+            
+            .pinout-page-subtitle {
+                font-size: 14pt !important;
+                color: #6b7280 !important;
+                text-align: center !important;
+                margin-bottom: 25px !important;
+                font-style: italic !important;
+            }
+            
+            .pinout-table-section {
+                margin: 20px 0 !important;
+            }
+            
+            .pinout-page-container {
+                text-align: center !important;
+                margin: 20px auto !important;
+                max-width: 800px !important;
+                width: 100% !important;
+            }
+            
+            .pinout-page-image {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                border-radius: 8px !important;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+                background: white !important;
+                padding: 15px !important;
+                object-fit: contain !important;
+                display: block !important;
+                margin: 0 auto !important;
+            }
+            
+            .pinout-page-caption {
+                font-size: 12pt !important;
+                color: #374151 !important;
+                text-align: center !important;
+                margin-top: 15px !important;
+                line-height: 1.5 !important;
+                font-style: italic !important;
+            }
+            
+            .professional-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 15px 0;
+                font-size: 11pt;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                border-radius: 6px;
+                overflow: hidden;
+            }
+            
+            .professional-table th {
+                background: #374151;
+                color: white;
+                padding: 12px 15px;
+                font-weight: 600;
+                text-align: left;
+                border-bottom: 2px solid #4b5563;
+            }
+            
+            .professional-table td {
+                padding: 10px 15px;
+                border-bottom: 1px solid #e5e7eb;
+                background: white;
+            }
+            
+            .professional-table tr:nth-child(even) td {
+                background: #f9fafb;
+            }
+            
+            .professional-table tr:hover td {
+                background: #f3f4f6;
+            }
+            
+            /* Estilos específicos para tablas de pinout */
+            .pinout-table {
+                margin: 20px auto !important;
+                max-width: 800px !important;
+            }
+            
+            .pinout-table th {
+                background: #1f2937 !important;
+                color: white !important;
+                font-size: 12pt !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.5px !important;
+            }
+            
+            .pin-number {
+                color: #374151 !important;
+                padding: 4px 8px !important;
+                font-weight: bold !important;
+                text-align: center !important;
+                display: inline-block !important;
+            }
+            
+            .pin-name {
+                font-weight: 600 !important;
+                color: #1f2937 !important;
+                font-family: 'Courier New', monospace !important;
+            }
+            
+            .pin-function {
+                color: #374151 !important;
+            }
+            
+            .download-button {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #374151;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 6px;
+                text-decoration: none;
+                font-weight: 500;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                z-index: 1000;
+                transition: all 0.3s ease;
+            }
+            
+            .download-button:hover {
+                background: #1f2937;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            }
+            
+            .section-title-major {
+                font-size: 20pt;
+                margin: 30px 0 20px 0;
+                padding: 15px 0;
+                border-bottom: 2px solid #374151;
+                color: #374151;
+            }
+            
+            .section-header {
+                font-size: 16pt;
+                margin: 20px 0 15px 0;
+                color: #374151;
+                font-weight: 600;
+            }
+            
+            /* Mejorar espaciado y legibilidad */
+            .introduction-section {
+                margin: 20px;
+                padding: 25px;
+                background: white;
+                border-radius: 8px;
+                border-left: 4px solid #374151;
+            }
+            
+            .product-views {
+                margin: 20px;
+                padding: 20px;
+                background: #f9fafb;
+                border-radius: 8px;
+            }
+            
+            .applications-section {
+                margin: 20px;
+                padding: 20px;
+                background: white;
+                border-radius: 8px;
+                border: 1px solid #e5e7eb;
+            }
+            
+            /* Mejorar la estructura general del documento */
+            .section-title {
+                font-size: 18pt !important;
+                color: #374151 !important;
+                margin: 25px 0 15px 0 !important;
+                padding-bottom: 8px !important;
+                border-bottom: 2px solid #e5e7eb !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.5px !important;
+            }
+            
+            .section-title-major {
+                font-size: 22pt !important;
+                color: #1f2937 !important;
+                margin: 30px 0 20px 0 !important;
+                padding: 15px 0 10px 0 !important;
+                border-bottom: 3px solid #374151 !important;
+                text-transform: uppercase !important;
+                letter-spacing: 1px !important;
+                text-align: center !important;
+            }
+            
+            .section-header {
+                font-size: 16pt !important;
+                color: #374151 !important;
+                margin: 20px 0 15px 0 !important;
+                font-weight: 600 !important;
+                text-transform: uppercase !important;
+            }
+            
+            /* Espaciado consistente para todas las secciones */
+            .introduction-section,
+            .product-views-section,
+            .visual-content > div,
+            .pin-description-page,
+            .pinout-layout-page {
+                margin-bottom: 20px !important;
+            }
+            
+            /* Mejorar navegación y interactividad */
+            .image-card {
+                cursor: pointer;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            
+            .image-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            }
+            
+            .no-print {
+                display: block !important;
+            }
+        }
+        
+        /* ESTILOS PARA IMPRESIÓN - OCULTAR ELEMENTOS WEB */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            .download-button {
+                display: none !important;
+            }
+            
+            body {
+                background: white !important;
+                padding: 0 !important;
+            }
+            
+            .container {
+                max-width: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                background: white !important;
+            }
         }
         </style>
         </head>
         <body>
-            <a href="#" class="download-button no-print" onclick="window.print()">
-                Download PDF
+            <a href="#" class="download-button no-print" onclick="window.print()" title="Imprimir o guardar como PDF">
+                📄 Descargar PDF
             </a>
             
             <div class="container">
@@ -1488,11 +2085,11 @@
                         <div class="product-title-section">
                             <div class="product-code">BME688</div>
                             <h1 class="product-title">BME688 Environmental Sensor 4-in-1</h1>
-                            <p class="product-subtitle">The sensor module for professional environmental monitoring</p>
+                            <p class="product-subtitle">Professional electronic component</p>
                         </div>
                         <div class="version-section">
                             <div class="version-badge">v1.0</div>
-                            <div>2025-07-16</div>
+                            <div>2025-07-17</div>
                             <div>Rev. A</div>
                         </div>
                     </div>
@@ -1501,7 +2098,7 @@
                 <div class="introduction-section">
                     <h2 class="section-title">Product Overview</h2>
                     <div class="introduction-content">
-            <p><p style="margin: 10px 0; color: #374151;">The BME688 Environmental Sensor 4-in-1 is an advanced, high-precision sensor module designed for professional environmental monitoring applications. Built around Bosch's industry-leading BME688 sensor, this module delivers exceptional accuracy and reliability for temperature, humidity, pressure, and gas detection in a single, compact form factor.</p></p><p><p style="margin: 10px 0; color: #374151;">This professional-grade sensor module is engineered for demanding applications requiring precise environmental data collection. With its dual communication interfaces and ultra-low power consumption, it's ideal for battery-powered IoT devices, industrial monitoring systems, and research applications where accuracy and reliability are paramount.</p></p>
+            <p>Professional electronic module designed for reliable performance and easy integration with modern development platforms.</p>
                     </div>
                 </div>
             
@@ -1524,61 +2121,300 @@
                     </div>
                 </div>
             
-                <div class="key-specs">
-                    <div class="specs-title">KEY TECHNICAL<br>SPECIFICATIONS</div>
-                    <div class="specs-grid">
+        
+                    <div class="features-section">
+                        <h2 class="section-title">TECHNICAL FEATURES</h2>
+                        <div class="features-grid">
             
-                        <div class="spec-group">
-                            <h4>POWER SUPPLY</h4>
+                        <div class="feature-card">
+                            <div class="feature-desc">Accurately measures ambient moisture for precise environmental monitoring.</div>
+                        </div>
                 
-                            <div class="spec-item">
-                                <span class="spec-label">Power supply:</span>
-                                <span class="spec-value">1.71V to 3.6V Sensor Supply Voltage</span>
-                            </div>
-                    
-                            <div class="spec-item">
-                                <span class="spec-label">Low power consumption:</span>
-                                <span class="spec-value">sleep < 0.1 µA, typical operation < 3 µA</span>
-                            </div>
-                    </div>
-                        <div class="spec-group">
-                            <h4>CONNECTIVITY</h4>
-                            <div class="spec-item">
-                                <span class="spec-label">Interfaces:</span>
-                                <span class="spec-value">I²C (Qwiic) and SPI</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Connector:</span>
-                                <span class="spec-value">Qwiic + Pin Headers</span>
-                            </div>
+                        <div class="feature-card">
+                            <div class="feature-desc">Detects atmospheric pressure changes to support dynamic weather tracking.</div>
+                        </div>
+                
+                        <div class="feature-card">
+                            <div class="feature-desc">Delivers consistent temperature readings even under varying conditions.</div>
+                        </div>
+                
+                        <div class="feature-card">
+                            <div class="feature-desc">Monitors a range of gases to help identify potential environmental hazards.</div>
+                        </div>
+                
+                        <div class="feature-card">
+                            <div class="feature-desc">Power supply: 1.71V to 3.6V Sensor Supply Voltage</div>
+                        </div>
+                
+                        <div class="feature-card">
+                            <div class="feature-desc">Low power consumption: sleep < 0.1 µA, typical operation < 3 µA</div>
+                        </div>
+                
+                        <div class="feature-card">
+                            <div class="feature-desc">Communication interfaces: I²C (Qwiic) and SPI</div>
+                        </div>
+                
+                        <div class="feature-card">
+                            <div class="feature-desc">Temperature measurement: –40 to +85 °C, ±0.5 °C accuracy</div>
+                        </div>
+                
+                        <div class="feature-card">
+                            <div class="feature-desc">Humidity measurement: 0 to 100 % RH, ±3 % accuracy</div>
+                        </div>
+                
+                        <div class="feature-card">
+                            <div class="feature-desc">Barometric pressure: 300 to 1100 hPa, ±1 hPa accuracy</div>
+                        </div>
+                
+                        <div class="feature-card">
+                            <div class="feature-desc">VOC detection: Indoor Air Quality (IAQ) index</div>
+                        </div>
+                
+                        <div class="feature-card">
+                            <div class="feature-desc">Dual interface: I²C (Qwiic) and SPI</div>
+                        </div>
+                
+                        <div class="feature-card">
+                            <div class="feature-desc">Compact form factor: Qwiic connector + standard through-hole pins</div>
+                        </div>
+                
                         </div>
                     </div>
-                </div>
             
-        
-                    <div class="table-section">
-                        <h2 class="section-title">PIN CONFIGURATION</h2>
-                        <table class="professional-table pinout-table">
+                    <div class="tables-section">
+                        <h2 class="section-title">TECHNICAL SPECIFICATIONS</h2>
+            
+                        <div class="table-container">
+                            <h3 class="table-title">📦 Overview</h3>
+                            <table class="professional-table">
 <thead>
 <tr>
-<th>Group</th>
-<th>Available Pins</th>
-<th>Suggested Use</th>
+<th>Feature</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="pin-function">SPI</td>
-<td class="pin-name">CSB, SDI (MOSI), SDO (MISO), SCK</td>
-<td class="pin-function">High-speed SPI to read sensor data</td>
+<td>Sensor</td>
+<td>BME688 Environmental Sensor</td>
+</tr>
+<tr>
+<td>Communication Protocol</td>
+<td>I2C and SPI</td>
+</tr>
+<tr>
+<td>Power Supply</td>
+<td>1.71V to 3.6V</td>
 </tr>
 </tbody>
 </table>
+                        </div>
+                    
+                        <div class="table-container">
+                            <h3 class="table-title">⚙️ Technical Specifications</h3>
+                            <table class="professional-table">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Technical Data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Package dimensions</td>
+<td>8-Pin LGA with metal3.0 x 3.0 x 0.93 mm³</td>
+</tr>
+<tr>
+<td>Operation range (full accuracy)</td>
+<td>Pressure: 300...1100 hPaHumidity: 0…100%Temperature: -40…85°C</td>
+</tr>
+<tr>
+<td>Supply voltage VDDIO</td>
+<td>1.2 ... 3.6 V</td>
+</tr>
+<tr>
+<td>Supply voltage VDD</td>
+<td>1.71 ... 3.6 V</td>
+</tr>
+<tr>
+<td>Interface</td>
+<td>I²C and SPI</td>
+</tr>
+<tr>
+<td>Average current consumption</td>
+<td>2.1 µA at 1 Hz humidity and temperature3.1 µA at 1 Hz pressure and temperature3.7 µA at 1 Hz humidity, pressure and temperature90 µA at ULP mode for p/h/T &amp; air quality0.9 mA at LP mode for p/h/T &amp; air quality3.9 mA in standard gas scan mode (gas scan mode &amp; scan rate can be optimized on applications with BME AI studio)</td>
+</tr>
+<tr>
+<td>Gas sensor - F1 score for H₂S scanning</td>
+<td>0.94</td>
+</tr>
+<tr>
+<td>Gas sensor - Standard scan speed</td>
+<td>10.8 s / scan</td>
+</tr>
+<tr>
+<td>Gas sensor - Electric charge for standard scan</td>
+<td>0.18 mAh (5 scans ~ 1 min)</td>
+</tr>
+<tr>
+<td>Gas sensor - Response time (τ 33-63%)</td>
+<td>&lt; 1 s (for new sensors)</td>
+</tr>
+<tr>
+<td>Gas sensor - Sensor-to-sensor deviation</td>
+<td>+/- 15%</td>
+</tr>
+<tr>
+<td>Gas sensor - Power consumption</td>
+<td>&lt; 0.1 mA in ultra-low power mode</td>
+</tr>
+<tr>
+<td>Gas sensor - Output data processing</td>
+<td>Major direct outputs: Index for Air Quality (IAQ), bVOC-&amp; CO₂-equivalents (ppm), Gas scan result (%) &amp; many more (all listed in datasheet in Table 20: BSEC outputs)</td>
+</tr>
+<tr>
+<td>Humidity sensor - Response time (τ0-63%)</td>
+<td>8 s</td>
+</tr>
+<tr>
+<td>Humidity sensor - Accuracy tolerance</td>
+<td>± 3 % relative humidity</td>
+</tr>
+<tr>
+<td>Humidity sensor - Hysteresis</td>
+<td>≤ 1.5 % relative humidity</td>
+</tr>
+<tr>
+<td>Pressure sensor - RMS Noise</td>
+<td>0.12 Pa (equiv. to 1.7 cm)</td>
+</tr>
+<tr>
+<td>Pressure sensor - Sensitivity Error</td>
+<td>± 0.25 % (equiv. to 1 m at 400 m height change)</td>
+</tr>
+<tr>
+<td>Pressure sensor - Temperature coefficient offset</td>
+<td>±1.3 Pa/K (equiv. to ±10.9 cm at 1°C temperature change)</td>
+</tr>
+</tbody>
+</table>
+                        </div>
+                    
+                        <div class="table-container">
+                            <h3 class="table-title">Supports</h3>
+                            <table class="professional-table">
+<thead>
+<tr>
+<th>Symbol</th>
+<th>I/O</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VCC</td>
+<td>Input</td>
+<td>3.3V or 5V</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>GND</td>
+<td>Common ground for all components</td>
+</tr>
+</tbody>
+</table>
+                        </div>
+                    
                     </div>
             
-                    <div class="table-section">
-                        <h2 class="section-title">COMMUNICATION INTERFACES</h2>
-                        <table class="professional-table">
+        
+                <div class="visual-content">
+                    <div class="section-title-major">HARDWARE DOCUMENTATION</div>
+            
+                            <div class="dimensions-section">
+                                <div class="section-header">MECHANICAL DIMENSIONS</div>
+                                <div class="dimensions-container">
+                                    <img src="unit_dimension_v_1_0_0_bme688_environmental_sensor_4_in_1.png" alt="Dimensions" class="dimensions-image-large">
+                                    <div class="dimensions-caption">Physical dimensions and mounting specifications (measurements in millimeters)</div>
+                                </div>
+                            </div>
+                
+                            <div class="topology-section">
+                                <div class="section-header">SYSTEM TOPOLOGY</div>
+                                <div style="text-align: center;">
+                                    <a href="unit_topology_v_1_0_0_bme688_environmental_sensor_4_in_1.png" target="_blank" class="image-link">
+                                        <img src="unit_topology_v_1_0_0_bme688_environmental_sensor_4_in_1.png" alt="System Topology" class="topology-image-large">
+                                    </a>
+                                    <div class="doc-caption" style="margin-top: 15px; font-size: 12pt;">
+                                        Connection topology and system integration diagram
+                                    </div>
+                                    <div class="doc-caption" style="font-size: 10pt; color: #6b7280; margin-top: 8px;">
+                                        <em>Click image to open in full size</em>
+                                    </div>
+                                </div>
+                
+                                <div class="components-table-section" style="margin-top: 25px;">
+                                    <h3 class="table-title">Component Reference</h3>
+                    <table class="professional-table">
+<thead>
+<tr>
+<th>Feature</th>
+<th>Icon</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Relative Humidity</td>
+<td></td>
+<td>Accurately measures ambient moisture for precise environmental monitoring.</td>
+</tr>
+<tr>
+<td>Barometric Pressure</td>
+<td></td>
+<td>Detects atmospheric pressure changes to support dynamic weather tracking.</td>
+</tr>
+<tr>
+<td>Excellent Temperature Stability</td>
+<td></td>
+<td>Delivers consistent temperature readings even under varying conditions.</td>
+</tr>
+<tr>
+<td>Gas Sensing</td>
+<td></td>
+<td>Monitors a range of gases to help identify potential environmental hazards.</td>
+</tr>
+</tbody>
+</table><table class="professional-table">
+<thead>
+<tr>
+<th>Ref.</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IC1</td>
+<td>BME688 Environmental Sensor</td>
+</tr>
+<tr>
+<td>L1</td>
+<td>Power On LED</td>
+</tr>
+<tr>
+<td>U1</td>
+<td>AP2112K 3V3 Regulator</td>
+</tr>
+<tr>
+<td>JP1</td>
+<td>2.54 mm Castellated Holes</td>
+</tr>
+<tr>
+<td>J1</td>
+<td>QWIIC Connector (JST 1 mm pitch) for I2C</td>
+</tr>
+</tbody>
+</table><table class="professional-table">
 <thead>
 <tr>
 <th>Interface</th>
@@ -1594,7 +2430,7 @@
 </tr>
 <tr>
 <td>I²C</td>
-<td>SDA, SCL  (CSB held high)</td>
+<td>SDA, SCL (CSB held high)</td>
 <td>Default interface (Qwiic connector)</td>
 </tr>
 <tr>
@@ -1602,154 +2438,94 @@
 <td>CSB = GND, SDI (MOSI), SCK, SDO (MISO)</td>
 <td>High-speed alternative</td>
 </tr>
+<tr>
+<td>USB</td>
+<td>–</td>
+<td>Unavailable on this module</td>
+</tr>
+</tbody>
+</table>
+                                </div>
+                    
+                            </div>
+                
+                            <div class="schematic-section">
+                                <div class="section-header">CIRCUIT SCHEMATIC</div>
+                
+                                <div style="text-align: center; margin-top: 20px;">
+                                    <div style="margin-bottom: 20px;">
+                                        <img src="Schematics_icon.jpg" alt="Circuit Schematic" class="schematic-image">
+                                        <div class="doc-caption" style="margin-top: 10px; font-size: 10pt; color: #6b7280;">
+                                            Complete circuit schematic showing all component connections
+                                        </div>
+                                    </div>
+                
+                                    <div class="doc-link" style="margin-top: 20px;">
+                                        <a href="unit_sch_v_1_0_0_bme688_environmental_sensor_4_in_1.pdf" target="_blank" class="schematic-link" style="font-size: 14pt; padding: 12px 20px;">
+                                            View Complete Schematic PDF
+                                        </a>
+                                    </div>
+                    
+                                </div>
+                            </div>
+                
+                        </div>
+            
+                    </div>
+            
+                <!-- PIN DESCRIPTION PAGE - INDEPENDENT PAGE FOR TABLE -->
+                <div class="pin-description-page">
+                    <div class="pinout-page-title">PIN DESCRIPTION</div>
+                    <div class="pinout-page-subtitle">Detailed pin assignment and electrical specifications</div>
+                    <div class="components-table-section">
+                        <h3 class="table-title">Signal Description</h3>
+            <table class="professional-table">
+<thead>
+<tr>
+<th>Function</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Power Supply</td>
+<td>3.3V or 5V</td>
+</tr>
+<tr>
+<td>Ground</td>
+<td>Common ground for all components</td>
+</tr>
+</tbody>
+</table><table class="professional-table">
+<thead>
+<tr>
+<th>Group</th>
+<th>Available Pins</th>
+<th>Suggested Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPI</td>
+<td>CSB, SDI (MOSI), SDO (MISO), SCK</td>
+<td>High-speed SPI to read sensor data</td>
+</tr>
+<tr>
+<td>I²C</td>
+<td>SDA, SCL (via Qwiic connector)</td>
+<td>Standard I²C for configuration & data acquisition</td>
+</tr>
 </tbody>
 </table>
                     </div>
-            
-                    <div class="features-section">
-                        <h2 class="section-title">TECHNICAL FEATURES</h2>
-                        <div class="features-grid">
-            
-                        <div class="feature-card">
-                            <div class="feature-title"> Temperature measurement</div>
-                            <div class="feature-desc">–40 to +85 °C, ±0.5 °C accuracy</div>
-                        </div>
-                
-                        <div class="feature-card">
-                            <div class="feature-title"> Humidity measurement</div>
-                            <div class="feature-desc">0 to 100 % RH, ±3 % accuracy</div>
-                        </div>
-                
-                        <div class="feature-card">
-                            <div class="feature-title"> Barometric pressure</div>
-                            <div class="feature-desc">300 to 1100 hPa, ±1 hPa accuracy</div>
-                        </div>
-                
-                        <div class="feature-card">
-                            <div class="feature-title"> VOC detection</div>
-                            <div class="feature-desc">Indoor Air Quality (IAQ) index</div>
-                        </div>
-                
-                        <div class="feature-card">
-                            <div class="feature-title"> Dual interface</div>
-                            <div class="feature-desc">I²C (Qwiic) and SPI</div>
-                        </div>
-                
-                        <div class="feature-card">
-                            <div class="feature-title"> Compact form factor</div>
-                            <div class="feature-desc">Qwiic connector + standard through-hole pins</div>
-                        </div>
-                
-                        </div>
-                    </div>
-            
-                        <div class="applications-section">
-                            <h2 class="section-title">TYPICAL APPLICATIONS</h2>
-                            <div class="applications-grid">
-                
-                            <div class="app-card">
-                                <div class="app-title">Environmental Monitoring</div>
-                                <div>Ideal for tracking air quality, humidity, temperature, and pressure in smart homes and industrial applications.</div>
-                            </div>
-                            
-                            <div class="app-card">
-                                <div class="app-title">IoT Devices</div>
-                                <div>Can be integrated into IoT systems for real-time environmental data collection and analysis.</div>
-                            </div>
-                            
-                            <div class="app-card">
-                                <div class="app-title">Weather Stations</div>
-                                <div>Useful in DIY weather stations for accurate weather forecasting and monitoring.</div>
-                            </div>
-                            
-                            <div class="app-card">
-                                <div class="app-title">Smart Agriculture</div>
-                                <div>Helps in monitoring soil and air conditions to optimize crop growth and yield.</div>
-                            </div>
-                            
-                            <div class="app-card">
-                                <div class="app-title">Wearable Devices</div>
-                                <div>Can be used in health and fitness wearables to monitor</div>
-                            </div>
-                            
-                            </div>
-                        </div>
-                
-        
-                <div class="visual-content">
-                    <div class="section-title-major">VISUAL DOCUMENTATION</div>
-            
-                    <div class="images-section">
-                        <div class="images-title">PRIMARY TECHNICAL DOCUMENTATION</div>
-            
-                            <div class="dimensions-section">
-                                <div class="section-header">MECHANICAL DIMENSIONS</div>
-                                <div class="dimensions-container">
-                                    <img src="unit_dimension_v_1_0_0_bme688_environmental_sensor_4_in_1.png" alt="Dimensions" class="dimensions-image-large">
-                                    <div class="dimensions-caption">Physical dimensions and mounting specifications (measurements in millimeters)</div>
-                                </div>
-                            </div>
-                
-                            <div class="additional-docs-section">
-                                <div class="section-header">SUPPLEMENTARY TECHNICAL DOCUMENTATION</div>
-                                <div class="additional-docs-grid">
-                
-                                    <div class="doc-card">
-                                        <div class="doc-title">SYSTEM TOPOLOGY</div>
-                                        <img src="unit_topology_v_1_0_0_bme688_environmental_sensor_4_in_1.png" alt="System Topology" class="topology-image">
-                                        <div class="doc-caption">Connection topology and system integration</div>
-                                    </div>
-                        
-                                    <div class="doc-card">
-                                        <div class="doc-title">CIRCUIT SCHEMATIC</div>
-                                        <img src="Schematics_icon.jpg" alt="Circuit Schematic" class="topology-image">
-                                        <div class="doc-caption">Detailed circuit schematic diagram</div>
-                        
-                                        <div class="doc-link">
-                                            <a href="unit_sch_v_1_0_0_bme688_environmental_sensor_4_in_1.pdf" target="_blank" class="schematic-link">
-                                                📄 View Complete Schematic PDF
-                                            </a>
-                                        </div>
-                            
-                                    </div>
-                        
-                                </div>
-                            </div>
-                
-                        </div>
-            
-                    </div>
-            
-                <!-- ADDITIONAL DOCUMENTATION -->
-                <div class="additional-sections">
-            
-                    <div class="section">
-                        <h2 class="section-title">Usage</h2>
-                        <div class="section-content">
-                            <p style="margin: 10px 0; color: #374151;">This module works with multiple platforms and toolchains:</p>
-<p style="margin: 10px 0; color: #374151;"></p>
-<ul style="margin: 10px 0; padding-left: 20px;">
-<li style="color: #374151; font-size: 11pt;">Arduino IDE (Adafruit BME680/BME688 library)</li>
-<li style="color: #374151; font-size: 11pt;">PlatformIO (Arduino or Espressif frameworks)</li>
-</ul>
-                        </div>
-                    </div>
-                
-                    <div class="section">
-                        <h2 class="section-title">Downloads</h2>
-                        <div class="section-content">
-                            <p style="margin: 10px 0; color: #374151;">-</p>
-                        </div>
-                    </div>
-                
                 </div>
             
-                <!-- PINOUT PAGE - INDEPENDENT SECTION -->
-                <div class="pinout-page">
-                    <div class="pinout-page-title">PIN CONFIGURATION & LAYOUT</div>
-                    <div class="pinout-page-subtitle">Detailed pin assignment and connector layout</div>
+                <!-- PINOUT LAYOUT PAGE - INDEPENDENT PAGE FOR IMAGE -->
+                <div class="pinout-layout-page">
+                    <div class="pinout-page-title">PIN CONFIGURATION LAYOUT</div>
+                    <div class="pinout-page-subtitle">Physical connector layout and pin positioning</div>
                     <div class="pinout-page-container">
-                        <img src="unit_pinout_v_0_0_1_ue0095_bm3688_4_in_1_en.png" alt="Pin Configuration" class="pinout-page-image">
+                        <img src="unit_pinout_v_0_0_1_ue0095_bm3688_4_in_1_en.png" alt="Pin Configuration Layout" class="pinout-page-image">
                     </div>
                     <div class="pinout-page-caption">
                         Complete pin configuration diagram showing all connectors, pin assignments, and electrical connections for proper integration
@@ -1769,7 +2545,7 @@
                             <div>Professional Technical Datasheet</div>
                         </div>
                         <div class="footer-right">
-                            <div>Date: 2025-07-16</div>
+                            <div>Date: 2025-07-17</div>
                             <div>For commercial distribution</div>
                         </div>
                     </div>
@@ -1777,7 +2553,7 @@
             </div>
             
             <script>
-                document.title = 'Circuit Schematic_Professional_Datasheet_v1.0_2025-07-16';
+                document.title = 'BME688 Environmental Sensor 4-in-1_Professional_Datasheet_v1.0_2025-07-17';
                 
                 // Enhanced print function
                 function printDatasheet() {
