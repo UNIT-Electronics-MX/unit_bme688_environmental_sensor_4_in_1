@@ -5,7 +5,6 @@
 <a href="./unit_sch_V_0_0_1_ue0095_BME688.pdf"><img src="resources/Schematics_icon.jpg?raw=false" width="450px"><br/> Schematics</a>
 </div>
 
----
 ## Key Technical Specifications
 
 - Operating Voltage: 1.71V to 3.6V
