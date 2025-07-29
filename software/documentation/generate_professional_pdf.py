@@ -9,6 +9,7 @@ import os
 import re
 import yaml
 import shutil
+import base64
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -2680,9 +2681,41 @@ class ProfessionalDatasheetGenerator:
             
             for line in lines:
                 line = line.strip()
-                if line.startswith('- '):
+                # Detectar formato "- **Título**: Descripción" o "- **Título:** Descripción"
+                if line.startswith('- **') and ('**:' in line or '**' in line):
+                    # Extraer título entre ** **
+                    title_match = re.search(r'\*\*(.*?)\*\*', line)
+                    if title_match:
+                        title = title_match.group(1).strip()
+                        
+                        # Encontrar donde termina el título y empieza la descripción
+                        # Buscar el patrón **título**: o **título:**
+                        if '**:' in line:
+                            desc_part = line.split('**:', 1)[1].strip()
+                        elif '**' in line:
+                            # Dividir por ** y tomar la parte después del segundo **
+                            parts = line.split('**')
+                            if len(parts) >= 3:
+                                # parts[0] = "- ", parts[1] = "título", parts[2] = ": descripción" o "** descripción"
+                                desc_part = parts[2].strip()
+                                if desc_part.startswith(':'):
+                                    desc_part = desc_part[1:].strip()
+                            else:
+                                desc_part = ''
+                        else:
+                            desc_part = ''
+                        
+                        if title and desc_part:
+                            features.append({
+                                'title': title,
+                                'desc': desc_part,
+                                'icon': ''
+                            })
+                            continue
+                
+                # Formato simple "- Título: Descripción"
+                elif line.startswith('- ') and ':' in line:
                     feature = line[2:].strip().replace('**', '')
-                    
                     if ':' in feature:
                         title, desc = feature.split(':', 1)
                         features.append({
@@ -2690,12 +2723,97 @@ class ProfessionalDatasheetGenerator:
                             'desc': desc.strip(),
                             'icon': ''
                         })
-                    else:
-                        features.append({
-                            'title': feature,
-                            'desc': '',
-                            'icon': ''
-                        })
+                        continue
+                
+                # Formato con asterisco "* **Título**: Descripción"
+                elif line.startswith('* ') and '**' in line:
+                    feature = line[2:].strip()
+                    title_match = re.search(r'\*\*(.*?)\*\*', feature)
+                    if title_match:
+                        title = title_match.group(1).strip()
+                        # Buscar descripción después del título
+                        remaining = feature.split('**', 2)
+                        if len(remaining) > 2:
+                            desc = remaining[2].strip()
+                            if desc.startswith(':'):
+                                desc = desc[1:].strip()
+                            
+                            features.append({
+                                'title': title,
+                                'desc': desc,
+                                'icon': ''
+                            })
+                            continue
+        
+        # Si no se encuentran características en las secciones, buscar en el contenido general
+        if not features:
+            # Buscar características en la introducción o descripción general
+            intro_section = discovered_data['explorer'].get_best_section([
+                'Introduction', 'Description', 'Overview', 'Product Overview'
+            ])
+            
+            if intro_section:
+                content = intro_section['content']
+                # Extraer características implícitas del texto descriptivo
+                if 'four key parameters' in content.lower() or '4-in-1' in content:
+                    features.append({
+                        'title': '4-in-1 Environmental Sensing',
+                        'desc': 'Temperature, humidity, pressure, and gas detection in one module',
+                        'icon': '🌡️'
+                    })
+                
+                if 'i2c' in content.lower() or 'spi' in content.lower():
+                    features.append({
+                        'title': 'Digital Communication',
+                        'desc': 'I²C and SPI interfaces for easy integration',
+                        'icon': '🔗'
+                    })
+                
+                if 'low power' in content.lower() or 'ultra-low' in content.lower():
+                    features.append({
+                        'title': 'Ultra-Low Power',
+                        'desc': 'Optimized for battery-operated applications',
+                        'icon': '🔋'
+                    })
+                
+                if 'ai' in content.lower() or 'machine learning' in content.lower():
+                    features.append({
+                        'title': 'AI-Enabled Gas Classification',
+                        'desc': 'Support for Bosch BME AI-Studio for custom gas analysis',
+                        'icon': '🤖'
+                    })
+                
+                if 'arduino' in content.lower() or 'esp32' in content.lower() or 'raspberry' in content.lower():
+                    features.append({
+                        'title': 'Platform Compatibility',
+                        'desc': 'Works with Arduino, ESP32, Raspberry Pi, and other platforms',
+                        'icon': '⚡'
+                    })
+        
+        # Si aún no hay características, agregar características genéricas basadas en el tipo de sensor
+        if not features:
+            features = [
+                {
+                    'title': 'High Accuracy Sensing',
+                    'desc': 'Precise environmental parameter measurement',
+                    'icon': '🎯'
+                },
+                {
+                    'title': 'Compact Design',
+                    'desc': 'Space-efficient module for embedded applications',
+                    'icon': '📐'
+                },
+                {
+                    'title': 'Easy Integration',
+                    'desc': 'Standard interfaces and connectors',
+                    'icon': '🔧'
+                },
+                {
+                    'title': 'Industrial Grade',
+                    'desc': 'Reliable operation in demanding environments',
+                    'icon': '🏭'
+                }
+            ]
         
         return features
 
@@ -3012,6 +3130,58 @@ class ProfessionalDatasheetGenerator:
                     shutil.copy2(source_path, dest_path)
                     print(f"📋 Copied schematic PDF {file} from hardware/ to build/")
 
+    def image_to_base64(self, image_path):
+        """Convierte una imagen a base64 para incrustación en HTML"""
+        try:
+            with open(image_path, 'rb') as image_file:
+                encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+                
+                # Determinar el tipo MIME basado en la extensión
+                ext = os.path.splitext(image_path)[1].lower()
+                mime_type = {
+                    '.png': 'image/png',
+                    '.jpg': 'image/jpeg',
+                    '.jpeg': 'image/jpeg',
+                    '.gif': 'image/gif',
+                    '.bmp': 'image/bmp'
+                }.get(ext, 'image/png')
+                
+                return f"data:{mime_type};base64,{encoded_string}"
+        except Exception as e:
+            print(f"⚠️ Error converting {image_path} to base64: {e}")
+            return None
+
+    def get_embedded_images(self, images):
+        """Convierte todas las imágenes a base64 para incrustación"""
+        embedded_images = {}
+        hardware_abs_path = os.path.abspath(self.hardware_path)
+        
+        # Embeber logo de UNIT Electronics
+        logo_path = os.path.join(os.path.dirname(__file__), 'images', 'logo_unit.png')
+        if os.path.exists(logo_path):
+            logo_base64 = self.image_to_base64(logo_path)
+            if logo_base64:
+                embedded_images['logo'] = logo_base64
+                print(f"📸 Embedded logo as base64")
+        
+        # Embeber imágenes de hardware
+        for image_key, image_file in images.items():
+            if image_file:
+                source_path = os.path.join(hardware_abs_path, image_file)
+                if os.path.exists(source_path):
+                    base64_data = self.image_to_base64(source_path)
+                    if base64_data:
+                        embedded_images[image_key] = base64_data
+                        print(f"📸 Embedded {image_file} as base64")
+                    else:
+                        # Fallback a ruta relativa si falla base64
+                        embedded_images[image_key] = image_file
+                        print(f"⚠️ Using relative path for {image_file}")
+                else:
+                    print(f"⚠️ Image not found: {source_path}")
+        
+        return embedded_images
+
     def generate_professional_datasheet(self, readme_path, output_path):
         """Genera hoja de datos profesional completa usando descubrimiento automático"""
         
@@ -3115,6 +3285,9 @@ class ProfessionalDatasheetGenerator:
         # FASE 4: Extraer aplicaciones
         applications = self.extract_applications_from_discovery(discovered_data)
         
+        # FASE 4.5: Convertir imágenes a base64 para incrustación
+        embedded_images = self.get_embedded_images(images)
+        
         # Crear fecha
         date = datetime.now(ZoneInfo("America/Mexico_City")).strftime("%Y-%m-%d")
         
@@ -3151,7 +3324,7 @@ class ProfessionalDatasheetGenerator:
                 <div class="header">
                     <div class="header-grid">
                         <div class="logo-section">
-                            <img src="images/logo_unit.png" alt="UNIT Electronics" class="company-logo" />
+                            <img src="{embedded_images.get('logo', 'images/logo_unit.png')}" alt="UNIT Electronics" class="company-logo" />
 
                         </div>
                         <div class="product-title-section">
@@ -3184,7 +3357,7 @@ class ProfessionalDatasheetGenerator:
         
         # PRODUCT VIEWS - Moved here after introduction
         product_views_available = (
-            images['unit_top'] or images['unit_bottom']
+            embedded_images.get('unit_top') or embedded_images.get('unit_bottom')
         )
         
         if product_views_available:
@@ -3195,21 +3368,21 @@ class ProfessionalDatasheetGenerator:
             '''
             
             # Top View
-            if images['unit_top']:
+            if embedded_images.get('unit_top'):
                 html += f'''
                         <div class="view-card">
                             <div class="view-title">TOP VIEW</div>
-                            <img src="{images['unit_top']}" alt="Top View" class="product-view-image">
+                            <img src="{embedded_images['unit_top']}" alt="Top View" class="product-view-image">
                             <div class="view-caption">Component placement and connectors</div>
                         </div>
                 '''
             
             # Bottom View (if available)
-            if images['unit_bottom']:
+            if embedded_images.get('unit_bottom'):
                 html += f'''
                         <div class="view-card">
                             <div class="view-title">BOTTOM VIEW</div>
-                            <img src="{images['unit_bottom']}" alt="Bottom View" class="product-view-image">
+                            <img src="{embedded_images['unit_bottom']}" alt="Bottom View" class="product-view-image">
                             <div class="view-caption">Underside components and connections</div>
                         </div>
                 '''
@@ -3311,17 +3484,38 @@ class ProfessionalDatasheetGenerator:
         if features:
             html += '''
                     <div class="features-section">
-                        <h2 class="section-title">TECHNICAL FEATURES</h2>
+                        <h2 class="section-title">KEY FEATURES</h2>
                         <div class="features-grid">
             '''
             for feature in features:
-                # Todas las características se muestran directamente como especificaciones técnicas
-                # Sin iconos ni títulos genéricos "Feature"
-                html += f'''
+                # Extraer título y descripción de manera segura
+                if isinstance(feature, dict):
+                    title = feature.get('title', '')
+                    desc = feature.get('desc', '')
+                    icon = feature.get('icon', '')
+                    
+                    # Si hay título y descripción
+                    if title and desc:
+                        html += f'''
+                        <div class="feature-card">
+                            <div class="feature-title">{icon} {title}</div>
+                            <div class="feature-desc">{desc}</div>
+                        </div>
+                        '''
+                    # Si solo hay título
+                    elif title:
+                        html += f'''
+                        <div class="feature-card">
+                            <div class="feature-title">{icon} {title}</div>
+                        </div>
+                        '''
+                else:
+                    # Si es un string simple
+                    html += f'''
                         <div class="feature-card">
                             <div class="feature-desc">{str(feature)}</div>
                         </div>
-                '''
+                    '''
             html += '''
                         </div>
                     </div>
@@ -3425,12 +3619,12 @@ class ProfessionalDatasheetGenerator:
         
         # SECTION 2: DOCUMENTACIÓN VISUAL CON TABLAS CORRESPONDIENTES
         has_images = any([
-            images['unit_pinout'],
-            images['unit_dimensions'],
-            images['unit_top'],
-            images['unit_bottom'],
-            images['unit_topology'],
-            images['unit_schematic']
+            embedded_images.get('unit_pinout'),
+            embedded_images.get('unit_dimensions'),
+            embedded_images.get('unit_top'),
+            embedded_images.get('unit_bottom'),
+            embedded_images.get('unit_topology'),
+            embedded_images.get('unit_schematic')
         ])
         
         if has_images:
@@ -3440,25 +3634,25 @@ class ProfessionalDatasheetGenerator:
             '''
             
             # DIMENSIONES CON ESPECIFICACIONES FÍSICAS
-            if images['unit_dimensions']:
+            if embedded_images.get('unit_dimensions'):
                 html += f'''
                             <div class="dimensions-section">
                                 <div class="section-header">MECHANICAL DIMENSIONS</div>
                                 <div class="dimensions-container">
-                                    <img src="{images['unit_dimensions']}" alt="Dimensions" class="dimensions-image-large">
+                                    <img src="{embedded_images['unit_dimensions']}" alt="Dimensions" class="dimensions-image-large">
                                     <div class="dimensions-caption">Physical dimensions and mounting specifications (measurements in millimeters)</div>
                                 </div>
                             </div>
                 '''
             
             # TOPOLOGÍA CON TABLA DE COMPONENTES
-            if images['unit_topology']:
+            if embedded_images.get('unit_topology'):
                 html += f'''
                             <div class="topology-section">
                                 <div class="section-header">SYSTEM TOPOLOGY</div>
                                 <div style="text-align: center;">
-                                    <a href="{images['unit_topology']}" target="_blank" class="image-link">
-                                        <img src="{images['unit_topology']}" alt="System Topology" class="topology-image-large">
+                                    <a href="{embedded_images['unit_topology']}" target="_blank" class="image-link">
+                                        <img src="{embedded_images['unit_topology']}" alt="System Topology" class="topology-image-large">
                                     </a>
                                     <div class="doc-caption" style="margin-top: 15px; font-size: 12pt;">
                                         Connection topology and system integration diagram
@@ -3734,14 +3928,14 @@ class ProfessionalDatasheetGenerator:
             '''
 
         # PINOUT LAYOUT PAGE - PÁGINA INDEPENDIENTE PARA LA IMAGEN
-        if images['unit_pinout']:
+        if embedded_images.get('unit_pinout'):
             html += f'''
                 <!-- PINOUT LAYOUT PAGE - INDEPENDENT PAGE FOR IMAGE -->
                 <div class="pinout-layout-page">
                     <div class="pinout-page-title">PIN CONFIGURATION LAYOUT</div>
                     <div class="pinout-page-subtitle">Physical connector layout and pin positioning</div>
                     <div class="pinout-page-container">
-                        <img src="{images['unit_pinout']}" alt="Pin Configuration Layout" class="pinout-page-image">
+                        <img src="{embedded_images['unit_pinout']}" alt="Pin Configuration Layout" class="pinout-page-image">
                     </div>
                     <div class="pinout-page-caption">
                         Complete pin configuration diagram showing all connectors, pin assignments, and electrical connections for proper integration
@@ -3904,88 +4098,6 @@ class ProfessionalDatasheetGenerator:
         
         return any(keyword in ' '.join(headers).lower() for keyword in component_keywords)
 
-    def extract_features_from_discovery(self, discovered_data):
-        """Extrae características usando el sistema de descubrimiento con mejor procesamiento"""
-        features = []
-        
-        sections = discovered_data.get('sections', {})
-        
-        # Buscar características específicamente en la sección "Key Features" y similares
-        feature_sections = ['key features', 'features', 'functional description', 'characteristics']
-        
-        for section_name, section_content in sections.items():
-            if any(feat in section_name.lower() for feat in feature_sections):
-                # Verificar si section_content es un diccionario o una cadena
-                if isinstance(section_content, dict):
-                    content_text = section_content.get('content', section_content.get('text', ''))
-                else:
-                    content_text = section_content
-                
-                if not content_text:
-                    continue
-                
-                # Limpiar el contenido
-                clean_content = self.clean_markdown_content(content_text)
-                
-                # Extraer lista de características
-                lines = clean_content.split('\n')
-                for line in lines:
-                    line = line.strip()
-                    
-                    # Procesar líneas de lista estándar
-                    if line.startswith('- ') or line.startswith('* '):
-                        feature = line[2:].strip()
-                        if feature and len(feature) > 10:
-                            # Limpiar formateo markdown adicional
-                            feature = re.sub(r'\*\*([^*]+)\*\*', r'\1', feature)
-                            features.append(feature)
-                    
-                    # Procesar líneas con formato "- **Campo:** Valor"
-                    elif line.startswith('- **') and ':' in line:
-                        # Extraer tanto el campo como el valor
-                        match = re.match(r'- \*\*([^*]+)\*\*:\s*(.+)', line)
-                        if match:
-                            field_name = match.group(1).strip()
-                            field_value = match.group(2).strip()
-                            feature = f"{field_name}: {field_value}"
-                            features.append(feature)
-                    
-                    # Procesar líneas con formato "**Campo:** Valor" (sin -)
-                    elif line.startswith('**') and ':' in line:
-                        match = re.match(r'\*\*([^*]+)\*\*:\s*(.+)', line)
-                        if match:
-                            field_name = match.group(1).strip()
-                            field_value = match.group(2).strip()
-                            feature = f"{field_name}: {field_value}"
-                            features.append(feature)
-        
-        # Si no se encontraron características específicas, usar valores por defecto mejorados
-        if not features:
-            features = [
-                "Axes: 3 (X, Y, Z)",
-                "Measurement Range: ±1300 µT", 
-                "Resolution: ~0.3 µT",
-                "Power Consumption: Ultra-low power consumption for battery-operated devices",
-                "Interfaces: I²C and SPI",
-                "Supply Voltage: 3.3 V",
-                "Operating Temperature: Wide operating range suitable for various environments"
-            ]
-        
-        return features
-        
-        # Si no se encontraron características, usar valores por defecto
-        if not features:
-            features = [
-                "High precision electronic sensor module",
-                "Low power consumption design",
-                "Wide operating temperature range",
-                "Standard interface compatibility",
-                "Compact form factor",
-                "Professional grade components"
-            ]
-        
-        return features
-
     def clean_markdown_content(self, content):
         """Limpia contenido markdown removiendo enlaces, imágenes y manteniendo texto"""
         import re
@@ -4023,6 +4135,109 @@ class ProfessionalDatasheetGenerator:
         
         return '\n'.join(cleaned_lines)
 
+    def extract_tables_from_text(self, text):
+        """Extrae tablas de texto markdown"""
+        tables = []
+        lines = text.split('\n')
+        
+        current_table = []
+        in_table = False
+        
+        for line in lines:
+            line = line.strip()
+            if '|' in line and line.startswith('|') and line.endswith('|'):
+                if not in_table:
+                    in_table = True
+                    current_table = []
+                current_table.append(line)
+            else:
+                if in_table and current_table:
+                    # Procesar tabla
+                    table_data = self.parse_markdown_table(current_table)
+                    if table_data:
+                        tables.append(table_data)
+                    current_table = []
+                in_table = False
+        
+        # Procesar la última tabla si existe
+        if in_table and current_table:
+            table_data = self.parse_markdown_table(current_table)
+            if table_data:
+                tables.append(table_data)
+        
+        return tables
+
+    def parse_markdown_table(self, table_lines):
+        """Convierte líneas de tabla markdown a estructura de datos"""
+        if len(table_lines) < 2:
+            return None
+        
+        # Primera línea son los headers
+        headers = [cell.strip() for cell in table_lines[0].split('|')[1:-1]]
+        
+        # Segunda línea debería ser separador (ignorar)
+        if len(table_lines) < 3:
+            return None
+        
+        # Resto son filas de datos
+        rows = []
+        for line in table_lines[2:]:
+            cells = [cell.strip() for cell in line.split('|')[1:-1]]
+            if len(cells) == len(headers):
+                row_dict = dict(zip(headers, cells))
+                rows.append(row_dict)
+        
+        return rows if rows else None
+
+    def is_electrical_spec_table(self, table):
+        """Determina si una tabla contiene especificaciones eléctricas"""
+        if not table:
+            return False
+        
+        headers = list(table[0].keys())
+        electrical_keywords = ['voltage', 'current', 'power', 'supply', 'vdd', 'vcc', 'consumption', 'specs', 'electrical']
+        
+        header_text = ' '.join(headers).lower()
+        return any(keyword in header_text for keyword in electrical_keywords)
+
+    def is_connectivity_table(self, table):
+        """Determina si una tabla contiene información de conectividad"""
+        if not table:
+            return False
+        
+        headers = list(table[0].keys())
+        connectivity_keywords = ['pin', 'gpio', 'interface', 'connection', 'spi', 'i2c', 'uart', 'connector']
+        
+        header_text = ' '.join(headers).lower()
+        return any(keyword in header_text for keyword in connectivity_keywords)
+
+    def is_pinout_table(self, table):
+        """Determina si una tabla contiene información de pinout"""
+        if not table:
+            return False
+        
+        headers = list(table[0].keys())
+        pinout_keywords = ['pin', 'pinout', 'gpio', 'function', 'description']
+        
+        header_text = ' '.join(headers).lower()
+        return any(keyword in header_text for keyword in pinout_keywords)
+
+    def convert_specs_list_to_dict(self, specs_list):
+        """Convierte una lista de especificaciones a diccionario"""
+        specs_dict = {}
+        
+        for spec in specs_list:
+            if isinstance(spec, dict):
+                specs_dict.update(spec)
+            elif isinstance(spec, str) and ':' in spec:
+                key, value = spec.split(':', 1)
+                specs_dict[key.strip()] = value.strip()
+            else:
+                # Si no tiene formato key:value, usar como descripción general
+                specs_dict[f"Spec_{len(specs_dict)+1}"] = str(spec)
+        
+        return specs_dict
+
     def extract_applications_from_discovery(self, discovered_data):
         """Extrae aplicaciones usando el sistema de descubrimiento"""
         applications = []
@@ -4054,359 +4269,104 @@ class ProfessionalDatasheetGenerator:
         # Si no se encontraron aplicaciones, usar valores por defecto
         if not applications:
             applications = [
-                "Industrial automation systems",
-                "IoT sensor networks",
-                "Environmental monitoring",
-                "Research and development projects",
-                "Educational electronics platforms",
-                "Prototype development"
+                "Environmental monitoring systems",
+                "IoT devices and sensors",
+                "Weather station applications", 
+                "Industrial automation",
+                "Research and development projects"
             ]
         
         return applications
 
-    def convert_html_to_pdf(self, html_path, pdf_path):
-        """Convierte HTML a PDF usando herramientas disponibles en el sistema"""
-        import subprocess
-        import shutil
+    def clean_markdown_links(self, text):
+        """Limpia enlaces markdown de un texto"""
+        import re
         
-        # Lista de herramientas para conversión HTML a PDF (en orden de preferencia)
-        tools = [
-            {
-                'command': 'wkhtmltopdf',
-                'args': ['--page-size', 'A4', '--orientation', 'Portrait', 
-                        '--margin-top', '20mm', '--margin-bottom', '20mm',
-                        '--margin-left', '15mm', '--margin-right', '15mm',
-                        '--print-media-type', '--enable-local-file-access']
-            },
-            {
-                'command': 'weasyprint',
-                'args': []
-            },
-            {
-                'command': 'chromium-browser',
-                'args': ['--headless', '--disable-gpu', '--print-to-pdf-no-header', 
-                        '--print-to-pdf']
-            },
-            {
-                'command': 'google-chrome',
-                'args': ['--headless', '--disable-gpu', '--print-to-pdf-no-header', 
-                        '--print-to-pdf']
-            }
-        ]
+        if not text:
+            return ""
         
-        for tool in tools:
-            if shutil.which(tool['command']):
-                try:
-                    cmd = [tool['command']] + tool['args'] + [html_path, pdf_path]
-                    
-                    # Ajuste especial para Chrome/Chromium
-                    if 'chrome' in tool['command'] or 'chromium' in tool['command']:
-                        cmd = [tool['command']] + tool['args'] + [f'--print-to-pdf={pdf_path}', f'file://{html_path}']
-                    
-                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-                    
-                    if result.returncode == 0 and os.path.exists(pdf_path):
-                        print(f"✅ PDF generado exitosamente usando {tool['command']}")
-                        return True
-                    else:
-                        print(f"⚠️ Error con {tool['command']}: {result.stderr}")
-                        
-                except Exception as e:
-                    print(f"⚠️ Error ejecutando {tool['command']}: {e}")
-                    continue
+        # Remover enlaces markdown [texto](url) -> texto
+        text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
         
-        # Si no se pudo generar PDF, crear una copia del HTML con extensión .pdf
-        print("⚠️ No se encontraron herramientas para conversión PDF. Creando marcador HTML.")
-        shutil.copy2(html_path, pdf_path)
-        print("💡 Para generar PDF real, instala: sudo apt install wkhtmltopdf")
-        return False
-
-    def convert_specs_list_to_dict(self, specs_list):
-        """Convierte lista de especificaciones a diccionario para compatibilidad"""
-        specs_dict = {}
+        # Remover enlaces simples <url>
+        text = re.sub(r'<[^>]+>', '', text)
         
-        if not specs_list:
-            return specs_dict
+        # Remover imágenes ![alt](src)
+        text = re.sub(r'!\[[^\]]*\]\([^)]+\)', '', text)
         
-        for spec in specs_list:
-            if isinstance(spec, dict):
-                # Buscar una clave que represente el parámetro/nombre
-                param_key = spec.get('Parameter', spec.get('Name', spec.get('Pin', '')))
-                if param_key:
-                    # Buscar valor en diferentes campos posibles
-                    value = spec.get('Typ', spec.get('Value', spec.get('Description', spec.get('Type', ''))))
-                    if value:
-                        specs_dict[param_key] = value
-        
-        return specs_dict
-
-    def extract_tables_from_text(self, text):
-        """Extrae tablas de formato markdown de un texto con mejor detección"""
-        tables = []
-        lines = text.split('\n')
-        
-        i = 0
-        while i < len(lines):
-            line = lines[i].strip()
-            
-            # Buscar líneas que parecen cabecera de tabla (deben tener al menos 2 |)
-            if line.count('|') >= 2 and i + 1 < len(lines):
-                next_line = lines[i + 1].strip()
-                
-                # Verificar si la siguiente línea es separador de tabla
-                if next_line.count('|') >= 2 and ('-' in next_line or ':' in next_line):
-                    # Extraer cabeceras
-                    headers = [cell.strip() for cell in line.split('|') if cell.strip()]
-                    
-                    # Si no hay cabeceras válidas, continuar
-                    if not headers:
-                        i += 1
-                        continue
-                    
-                    table_data = []
-                    j = i + 2  # Saltar línea de cabecera y separador
-                    
-                    # Extraer filas de datos
-                    while j < len(lines):
-                        row_line = lines[j].strip()
-                        
-                        # Si la línea tiene suficientes | y no está vacía
-                        if row_line.count('|') >= 2 and row_line:
-                            # Limpiar enlaces markdown de la fila (se procesarán después según el tipo)
-                            row_line_clean = row_line
-                            row_data = [cell.strip() for cell in row_line_clean.split('|') if cell.strip()]
-                            
-                            # Solo agregar si tiene datos válidos
-                            if len(row_data) >= len(headers):
-                                row_dict = {}
-                                for k, header in enumerate(headers):
-                                    if k < len(row_data):
-                                        row_dict[header] = row_data[k]
-                                table_data.append(row_dict)
-                            j += 1
-                        else:
-                            break
-                    
-                    # Solo agregar la tabla si tiene datos
-                    if table_data:
-                        tables.append(table_data)
-                    i = j
-                else:
-                    i += 1
-            else:
-                i += 1
-        
-        return tables
+        return text.strip()
 
     def convert_markdown_links_to_html(self, text):
         """Convierte enlaces markdown a HTML"""
         import re
         
-        # Patrón para enlaces markdown [texto](url)
-        link_pattern = r'\[([^\]]+)\]\(([^)]+)\)'
-        # Reemplazar con enlaces HTML
-        html_links = re.sub(link_pattern, r'<a href="\2" target="_blank">\1</a>', text)
-        
-        return html_links
-
-    def clean_markdown_links(self, text):
-        """Limpia enlaces markdown pero mantiene el texto"""
-        import re
-        
-        # Patrón para enlaces markdown [texto](url)
-        link_pattern = r'\[([^\]]+)\]\([^)]+\)'
-        # Reemplazar con solo el texto
-        cleaned = re.sub(link_pattern, r'\1', text)
-        
-        # Patrón para enlaces simples <url>
-        simple_link_pattern = r'<[^>]+>'
-        cleaned = re.sub(simple_link_pattern, '', cleaned)
-        
-        # Limpiar espacios extra
-        cleaned = ' '.join(cleaned.split())
-        
-        return cleaned
-
-    def is_electrical_spec_table(self, table):
-        """Determina si una tabla contiene especificaciones eléctricas"""
-        if not table:
-            return False
-        
-        headers = list(table[0].keys())
-        electrical_keywords = ['voltage', 'current', 'power', 'temperature', 'parameter', 'min', 'max', 'typ']
-        
-        return any(keyword in ' '.join(headers).lower() for keyword in electrical_keywords)
-
-    def is_connectivity_table(self, table):
-        """Determina si una tabla contiene información de conectividad"""
-        if not table:
-            return False
-        
-        headers = list(table[0].keys())
-        connectivity_keywords = ['pin', 'connector', 'signal', 'name', 'type', 'description']
-        
-        return any(keyword in ' '.join(headers).lower() for keyword in connectivity_keywords)
-        """Procesa contenido markdown básico: enlaces y listas"""
-        if not content:
+        if not text:
             return ""
         
-        import re
+        # Convertir enlaces markdown [texto](url) -> <a href="url">texto</a>
+        text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2" target="_blank">\1</a>', text)
         
-        # Eliminar emojis de caracteres unicode
-        emoji_pattern = re.compile("["
-                                   u"\U0001F600-\U0001F64F"  # emoticons
-                                   u"\U0001F300-\U0001F5FF"  # symbols & pictographs
-                                   u"\U0001F680-\U0001F6FF"  # transport & map symbols
-                                   u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
-                                   u"\U00002702-\U000027B0"
-                                   u"\U000024C2-\U0001F251"
-                                   "]+", flags=re.UNICODE)
-        content = emoji_pattern.sub('', content)
+        # Remover imágenes ![alt](src)
+        text = re.sub(r'!\[[^\]]*\]\([^)]+\)', '', text)
         
-        # Procesar enlaces markdown [texto](url)
-        def replace_link(match):
-            text = match.group(1)
-            url = match.group(2)
-            return f'<a href="{url}" target="_blank" style="color: #374151; text-decoration: underline;">{text}</a>'
-        
-        content = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', replace_link, content)
-        
-        # Procesar listas con guiones
-        lines = content.split('\n')
-        processed_lines = []
-        in_list = False
-        
-        for line in lines:
-            line = line.strip()
-            if line.startswith('- '):
-                if not in_list:
-                    processed_lines.append('<ul style="margin: 10px 0; padding-left: 20px;">')
-                    in_list = True
-                item_content = line[2:].strip()
-                processed_lines.append(f'<li style="color: #374151; font-size: 11pt;">{item_content}</li>')
-            else:
-                if in_list:
-                    processed_lines.append('</ul>')
-                    in_list = False
-                processed_lines.append(f'<p style="margin: 10px 0; color: #374151;">{line}</p>')
-        
-        if in_list:
-            processed_lines.append('</ul>')
-        
-        return '\n'.join(processed_lines)
+        return text
 
-    def extract_introduction(self, content):
-        """Extrae párrafos de introducción desde el contenido principal"""
-        paragraphs = []
+    def convert_html_to_pdf(self, html_path, output_path):
+        """Convierte HTML a PDF usando herramientas disponibles"""
+        import subprocess
+        import os
         
-        # Extraer el primer párrafo del documento (generalmente la descripción principal)
-        lines = content.split('\n')
-        first_paragraph = ""
+        pdf_path = output_path.replace('.html', '.pdf')
         
-        for line in lines:
-            line = line.strip()
-            # Saltar encabezados, imágenes y enlaces
-            if (line.startswith('#') or 
-                line.startswith('<div') or 
-                line.startswith('![') or 
-                line.startswith('<a') or
-                line.startswith('|') or
-                line == ''):
+        # Lista de herramientas para intentar (ordenadas por preferencia)
+        pdf_tools = [
+            {
+                'name': 'google-chrome',
+                'command': ['google-chrome', '--headless', '--disable-gpu', '--disable-software-rasterizer', 
+                           '--no-sandbox', '--print-to-pdf={}'.format(pdf_path), html_path],
+            },
+            {
+                'name': 'chromium-browser',
+                'command': ['chromium-browser', '--headless', '--disable-gpu', '--disable-software-rasterizer',
+                           '--no-sandbox', '--print-to-pdf={}'.format(pdf_path), html_path],
+            },
+            {
+                'name': 'chromium',
+                'command': ['chromium', '--headless', '--disable-gpu', '--disable-software-rasterizer',
+                           '--no-sandbox', '--print-to-pdf={}'.format(pdf_path), html_path],
+            },
+            {
+                'name': 'wkhtmltopdf',
+                'command': ['wkhtmltopdf', '--page-size', 'A4', '--enable-local-file-access', 
+                           html_path, pdf_path],
+            }
+        ]
+        
+        for tool in pdf_tools:
+            try:
+                result = subprocess.run(tool['command'], 
+                                      capture_output=True, 
+                                      text=True, 
+                                      timeout=60)
+                
+                if result.returncode == 0 and os.path.exists(pdf_path):
+                    print(f"✅ PDF generado exitosamente usando {tool['name']}")
+                    return True
+                else:
+                    print(f"⚠️ {tool['name']} falló: {result.stderr}")
+                    
+            except FileNotFoundError:
+                print(f"⚠️ {tool['name']} no encontrado")
                 continue
-            
-            # Si encontramos texto real, es probablemente la introducción
-            if line and not line.startswith('-') and not line.startswith('*'):
-                first_paragraph = line
-                break
+            except subprocess.TimeoutExpired:
+                print(f"⚠️ {tool['name']} timeout")
+                continue
+            except Exception as e:
+                print(f"⚠️ Error con {tool['name']}: {e}")
+                continue
         
-        if first_paragraph:
-            # Limpiar markdown
-            clean_para = first_paragraph.replace('**', '').replace('*', '')
-            paragraphs.append(clean_para)
-        
-        # Si no se encontró introducción, usar una genérica basada en el título
-        if not paragraphs:
-            paragraphs = [
-                "Professional electronic module designed for reliable performance and easy integration.",
-                "Features modern communication interfaces and robust design for various applications."
-            ]
-        
-        return paragraphs
-
-    def update_main_readme(self, main_readme_path, hardware_data):
-        """Actualiza el README principal con información complementaria del hardware"""
-        if not hardware_data:
-            print("⚠️ No hardware data available for README update")
-            return
-        
-        # Leer README principal actual
-        with open(main_readme_path, 'r', encoding='utf-8') as f:
-            main_content = f.read()
-        
-        hardware_content = hardware_data['content']
-        
-        # Extraer información útil del hardware
-        pinout_table = self.extract_pinout_table(hardware_content)
-        component_table = self.extract_component_table(hardware_content)
-        
-        updated_content = main_content
-        
-        # Agregar sección de pinout si no existe
-        if pinout_table and '## Pinout' not in main_content and '## Pin Configuration' not in main_content:
-            # Buscar donde insertar la sección de pinout (después de Features)
-            lines = updated_content.split('\n')
-            insert_index = -1
-            
-            for i, line in enumerate(lines):
-                if line.strip().startswith('## Applications'):
-                    insert_index = i
-                    break
-            
-            if insert_index > 0:
-                pinout_section = f"""
-## Pinout
-
-{pinout_table}
-
-"""
-                lines.insert(insert_index, pinout_section)
-                updated_content = '\n'.join(lines)
-                print("✅ Added pinout section to main README")
-        
-        # Agregar sección de componentes si no existe
-        if component_table and '## Component Reference' not in main_content:
-            # Agregar al final antes de Documentation
-            lines = updated_content.split('\n')
-            insert_index = -1
-            
-            for i, line in enumerate(lines):
-                if line.strip().startswith('## Documentation'):
-                    insert_index = i
-                    break
-            
-            if insert_index > 0:
-                component_section = f"""
-## Component Reference
-
-{component_table}
-
-"""
-                lines.insert(insert_index, component_section)
-                updated_content = '\n'.join(lines)
-                print("✅ Added component reference section to main README")
-        
-        # Guardar README actualizado
-        if updated_content != main_content:
-            backup_path = main_readme_path + '.backup'
-            shutil.copy2(main_readme_path, backup_path)
-            print(f"📋 Backup created: {backup_path}")
-            
-            with open(main_readme_path, 'w', encoding='utf-8') as f:
-                f.write(updated_content)
-            print(f"✅ Main README updated: {main_readme_path}")
-        else:
-            print("ℹ️ No updates needed for main README")
-
+        print("⚠️ No se pudo generar PDF. HTML disponible en:", html_path)
+        return False
 
 def main():
     """Función principal para probar el generador con sistema de descubrimiento automático"""
