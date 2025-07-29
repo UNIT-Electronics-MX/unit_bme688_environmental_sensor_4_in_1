@@ -22,7 +22,7 @@ The module features digital communication via I²C or SPI interfaces, ensuring s
 |:--------:|:----:|
 | Wiki-UNIT Electronics | [Wiki - UNIT Electronics](https://unit-electronics-mx.github.io/wiki_uelectronics/docs/Sensors/bme688) |
 | Github Repository | [Github Repository](https://github.com/UNIT-Electronics-MX/unit_bme688_environmental_sensor_4_in_1) |
-| Product Brief | [Product brief](hhttps://unit-electronics-mx.github.io/unit_bme688_environmental_sensor_4_in_1/datasheet_professional.html) |
+| Product Brief | [Product brief](https://unit-electronics-mx.github.io/unit_bme688_environmental_sensor_4_in_1/datasheet_professional.html) |
 | Schematic | [Schematic](https://unit-electronics-mx.github.io/unit_bme688_environmental_sensor_4_in_1/unit_sch_v_1_0_0_bme688_environmental_sensor_4_in_1.pdf) |
 
 </div>
