@@ -14,31 +14,20 @@ The module features digital communication via I²C or SPI interfaces, ensuring s
 </div>
 
 
-## Additional Resources
-
-<div align="center">
-
-| Resource | Link |
-|:--------:|:----:|
-| Wiki-UNIT Electronics | [Wiki - UNIT Electronics](https://unit-electronics-mx.github.io/wiki_uelectronics/docs/Sensors/bme688) |
-| Github Repository | [Github Repository](https://github.com/UNIT-Electronics-MX/unit_bme688_environmental_sensor_4_in_1) |
-| Product Brief | [Product brief](https://unit-electronics-mx.github.io/unit_bme688_environmental_sensor_4_in_1/datasheet_professional.html) |
-| Schematic | [Schematic](https://unit-electronics-mx.github.io/unit_bme688_environmental_sensor_4_in_1/unit_sch_v_1_0_0_bme688_environmental_sensor_4_in_1.pdf) |
-
-</div>
 
 
+## 📦 Overview
 
-## Key Technical Specifications
-
-- Operating Voltage: 1.71V to 3.6V
-- Supply Current: 0.9 µA (sleep), 2.1 µA (ULP), ~920 µA (gas scan)
-- Operating Temperature: -40°C to +85°C
-- Relative Humidity Range: 0% to 100% RH
-- Pressure Range: 300 hPa to 1100 hPa
-- Gas Sensing: VOCs, IAQ index via integrated gas sensor
-- Interfaces: I²C and SPI (up to 3.4 MHz)
-- Package Size: 3.0 × 3.0 × 0.93 mm³
+| Parameter                | Value/Description                                 |
+|--------------------------|---------------------------------------------------|
+| Operating Voltage        | 1.71V to 3.6V                                     |
+| Supply Current           | 0.9 µA (sleep), 2.1 µA (ULP), ~920 µA (gas scan)  |
+| Operating Temperature    | -40°C to +85°C                                    |
+| Relative Humidity Range  | 0% to 100% RH                                     |
+| Pressure Range           | 300 hPa to 1100 hPa                               |
+| Gas Sensing              | VOCs, IAQ index via integrated gas sensor         |
+| Interfaces               | I²C and SPI (up to 3.4 MHz)                       |
+| Package Size             | 3.0 × 3.0 × 0.93 mm³                              |
 
 
 
@@ -53,16 +42,13 @@ The module features digital communication via I²C or SPI interfaces, ensuring s
 - **Interfaces:** I²C and SPI
 - **Input Voltage via VCC Pin:** 3.6–6.0 V (through onboard voltage regulator)
 
-## Applications
+## 🧪 Use Cases
 
-| Application            | Description                                                                                      |
-|------------------------|--------------------------------------------------------------------------------------------------|
-| Environmental Monitoring | Tracks air quality, humidity, temperature, and pressure in smart homes and industrial settings. |
-| IoT Devices            | Integrates into IoT systems for real-time environmental data collection and analysis.            |
-| Weather Stations       | Enables accurate weather forecasting and monitoring in DIY weather station projects.              |
-| Smart Agriculture      | Monitors soil and air conditions to optimize crop growth and yield.                              |
-| Wearable Devices       | Supports health and fitness wearables for environmental parameter monitoring.                    |
-
+- **Environmental Monitoring:** Tracks air quality, humidity, temperature, and pressure in smart homes and industrial settings.
+- **IoT Devices:** Integrates into IoT systems for real-time environmental data collection and analysis.
+- **Weather Stations:** Enables accurate weather forecasting and monitoring in DIY weather station projects.
+- **Smart Agriculture:** Monitors soil and air conditions to optimize crop growth and yield.
+- **Wearable Devices:** Supports health and fitness wearables for environmental parameter monitoring.
 
 
 
