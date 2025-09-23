@@ -43,16 +43,25 @@
 
 ## 🔌 Pinout
 
+
 <div align="center">
-    <a href="#"><img src="resources/unit_pinout_v_0_0_1_ue0095_bm3688_4_in_1_en.jpg" width="500px"><br/>Pinout</a>
-    <br/>
-    <br/>
 
+### **Pinout Diagram**
 
-| Pin Label | Function         | Notes                             |
-|-----------|------------------|-----------------------------------|
-| VCC       | Power Supply     | 3.3V or 5V                        |
-| GND       | Ground           | Common ground for all components  |
+<a href="#"><img src="resources/unit_pinout_v_0_0_1_ue0095_bm3688_4_in_1_en.jpg" width="500px"><br/>Pinout</a>
+<br/>
+<br/>
+
+### **Pinout Details**
+
+| Pin Label | Description                  |
+|-----------|------------------------------|
+| VCC       | Power supply (3.3V or 5V)    |
+| GND       | Ground                       |
+| SDA/SDI   | I²C data / SPI data in       |
+| SCL/SCK   | I²C clock / SPI clock        |
+| CSB       | Chip select (SPI, active low)|
+| SDO       | SPI data out                 |
 
 </div>
 
