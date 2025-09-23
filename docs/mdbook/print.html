@@ -364,6 +364,52 @@ Please refer to <a href="LICENSE.html"><code>LICENSE.md</code></a> for full term
 <div style="break-before: page; page-break-before: always;"></div><h1 id="examples"><a class="header" href="#examples">Examples</a></h1>
 <h2 id="arduinoc-examples"><a class="header" href="#arduinoc-examples">Arduino/C++ Examples</a></h2>
 <p>The following examples demonstrate various features of this development board.</p>
+<h3 id="-i2c-example1ino"><a class="header" href="#-i2c-example1ino">⚡ i2c: example1.ino</a></h3>
+<pre><code class="language-cpp">#include &lt;Arduino.h&gt;
+#include "bme68xLibrary.h"
+#include &lt;Wire.h&gt;
+
+#define SDA_PIN 21
+#define SCL_PIN 22
+
+Bme68x bme;
+
+void setup() {
+  Serial.begin(115200);
+  while (!Serial) delay(10);
+
+  Wire.begin(SDA_PIN, SCL_PIN);
+  Wire.setClock(100000);  // 100 kHz
+
+  // ✅ Solo llama a begin, sin usar if
+  bme.begin(0x77, Wire);
+
+  // Verifica estado del sensor
+</code></pre>
+<p><a href="https://github.com/UNIT-Electronics-MX/unit_bme688_environmental_sensor_4_in_1/blob/main/software/examples/c/i2c/example1.ino">📄 Ver código completo en GitHub</a></p>
+<h3 id="-spi-example_spiino"><a class="header" href="#-spi-example_spiino">⚡ spi: example_spi.ino</a></h3>
+<pre><code class="language-cpp">#include &lt;Arduino.h&gt;
+#include &lt;SPI.h&gt;
+#include "bme68xLibrary.h"
+
+// Pines personalizados para ESP32-C6
+#define PIN_MOSI 7
+#define PIN_MISO 2
+#define PIN_SCK  6
+#define PIN_CS   18
+
+SPIClass mySPI(0);  // Bus SPI #0 para ESP32-C6
+Bme68x bme;
+
+void setup() {
+  Serial.begin(115200);
+  while (!Serial);
+
+  // Inicializar SPI con pines personalizados
+  mySPI.begin(PIN_SCK, PIN_MISO, PIN_MOSI, PIN_CS);
+
+</code></pre>
+<p><a href="https://github.com/UNIT-Electronics-MX/unit_bme688_environmental_sensor_4_in_1/blob/main/software/examples/c/spi/example_spi.ino">📄 Ver código completo en GitHub</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="datasheet--documentation"><a class="header" href="#datasheet--documentation">Datasheet &amp; Documentation</a></h1>
 <h2 id="-professional-datasheet"><a class="header" href="#-professional-datasheet">📄 Professional Datasheet</a></h2>
 <p>Complete technical specifications and professional documentation.</p>
