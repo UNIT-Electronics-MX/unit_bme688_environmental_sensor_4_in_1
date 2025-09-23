@@ -2159,28 +2159,6 @@ The module features digital communication via I²C or SPI interfaces, ensuring s
                 </div>
             
         
-                    <div class="table-section">
-                        <h2 class="section-title">PIN CONFIGURATION</h2>
-                        <table class="professional-table pinout-table">
-<thead>
-<tr>
-<th>Function</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="pin-name">Power Supply</td>
-<td class="pin-function">3.3V or 5V</td>
-</tr>
-<tr>
-<td class="pin-name">Ground</td>
-<td class="pin-function">Common ground for all components</td>
-</tr>
-</tbody>
-</table>
-                    </div>
-            
                     <div class="features-section">
                         <h2 class="section-title">KEY FEATURES</h2>
                         <div class="features-grid">
@@ -2459,18 +2437,34 @@ The module features digital communication via I²C or SPI interfaces, ensuring s
             <table class="professional-table">
 <thead>
 <tr>
-<th>Function</th>
-<th>Notes</th>
+<th>Pin Label</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Power Supply</td>
-<td>3.3V or 5V</td>
+<td>VCC</td>
+<td>Power supply (3.3V or 5V)</td>
 </tr>
 <tr>
+<td>GND</td>
 <td>Ground</td>
-<td>Common ground for all components</td>
+</tr>
+<tr>
+<td>SDA/SDI</td>
+<td>I²C data / SPI data in</td>
+</tr>
+<tr>
+<td>SCL/SCK</td>
+<td>I²C clock / SPI clock</td>
+</tr>
+<tr>
+<td>CSB</td>
+<td>Chip select (SPI, active low)</td>
+</tr>
+<tr>
+<td>SDO</td>
+<td>SPI data out</td>
 </tr>
 </tbody>
 </table>
