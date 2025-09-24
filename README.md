@@ -54,9 +54,9 @@ The module features digital communication via I²C or SPI interfaces, ensuring s
 
 ## 📚 Resources
 
-- [Schematic Diagram](hardware/schematic.pdf)
-- [Board Dimensions (DXF)](docs/dimensions.dxf)
-- [Pinout Diagram](docs/pinout.png)
+- [<a href="./hardware/unit_sch_v_1_0_0_bme688_environmental_sensor_4_in_1.pdf">Schematic Diagram</a>](hardware/schematic.pdf)
+- [<a href="./hardware/resources/unit_dimension_v_1_0_0_bme688_environmental_sensor_4_in_1.png">Board Dimensions (DXF)](docs/dimensions.dxf)
+- [<a href="./hardware/resources/unit_pinout_v_0_0_1_ue0095_bm3688_4_in_1_es.png">Pinout Diagram</a>](docs/pinout.png)
 - [Firmware Examples](firmware/)
 - [Getting Started Guide](docs/getting_started.md)
 
