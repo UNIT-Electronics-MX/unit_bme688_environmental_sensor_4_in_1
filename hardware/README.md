@@ -23,8 +23,8 @@
 |-------------------------------------------------|------------------------------------------------------------|
 | Package dimensions                              | 8-Pin LGA with metal<br>3.0 x 3.0 x 0.93 mm³               |
 | Operation range (full accuracy)                 | Pressure: 300...1100 hPa<br>Humidity: 0…100%<br>Temperature: -40…85°C |
-| Supply voltage VDDIO                            | 1.2 ... 3.6 V                                              |
-| Supply voltage VDD                              | 1.71 ... 3.6 V                                             |
+| Supply voltage VDDIO                            | 1.2 - 3.6 V                                              |
+| Supply voltage VDD                              | 1.71 - 3.6 V                                             |
 | Interface                                       | I²C and SPI                                                |
 | Average current consumption                     | 2.1 µA at 1 Hz humidity and temperature<br>3.1 µA at 1 Hz pressure and temperature<br>3.7 µA at 1 Hz humidity, pressure and temperature<br>90 µA at ULP mode for p/h/T &amp; air quality<br>0.9 mA at LP mode for p/h/T &amp; air quality<br>3.9 mA in standard gas scan mode (gas scan mode &amp; scan rate can be optimized on applications with BME AI studio) |
 | Gas sensor - F1 score for H₂S scanning          | 0.94                                                       |
