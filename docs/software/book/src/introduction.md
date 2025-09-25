@@ -1,27 +1,15 @@
 # BME688 Environmental Sensor 4-in-1
 
 ## Introduction
-The BME688 Environmental Sensor 4-in-1 is a compact module that integrates temperature, humidity, barometric pressure, and gas sensing (including VOCs and IAQ) in a single package. Based on Bosch Sensortec technology, it offers digital I²C/SPI interfaces for easy integration with platforms like Arduino, ESP32, and Raspberry Pi. Its low power consumption and small size make it ideal for wearables, portable devices, and IoT applications. The sensor also supports AI-based gas classification via Bosch’s BME AI-Studio, enabling advanced air quality monitoring.
 
+The BME688 Environmental Sensor 4-in-1 is a compact and highly integrated sensing solution based on Bosch Sensortec’s advanced gas sensor technology. Designed for next-generation environmental monitoring, this module simultaneously measures four key parameters: temperature, relative humidity, barometric pressure, and gas presence, including volatile organic compounds (VOCs) and indoor air quality (IAQ) indicators. By combining multiple sensors in one package, the BME688 reduces design complexity and board space, making it especially suitable for size-constrained applications such as wearables, portable devices, and smart IoT nodes.
 
+The module features digital communication via I²C or SPI interfaces, ensuring seamless integration with microcontrollers and embedded platforms like Arduino, ESP32, and Raspberry Pi. Its ultra-low power consumption enables continuous monitoring in battery-operated systems, while its wide operating range and high accuracy support precise environmental data acquisition under dynamic conditions. Furthermore, the gas sensor includes support for AI-based classification of gas mixtures using Bosch’s BME AI-Studio, opening new possibilities for custom air quality applications.
 
 <div align="center">
-  <img src="hardware/resources/unit_top_v_1_0_0_bme688_enviromental_sensor_4_in_1.png" width="450px" alt="Development Board">
+  <img src="./resources/unit_top_v_1_0_0_bme688_enviromental_sensor_4_in_1.png" style="max-width: 80%; height: auto;" alt="Development Board">
   <p><em></em></p>
 </div>
-
-<div align="center">
-
-### Quick Setup
-
-
-[<img src="https://img.shields.io/badge/Product%20Wiki-blue?style=for-the-badge" alt="Product Wiki" target="_blank">](https://unit-electronics-mx.github.io/unit_bme688_environmental_sensor_4_in_1/mdbook/index.html)
-[<img src="https://img.shields.io/badge/Datasheet-green?style=for-the-badge" alt="Datasheet" target="_blank">](https://unit-electronics-mx.github.io/unit_bme688_environmental_sensor_4_in_1/datasheet_professional.html)
-[<img src="https://img.shields.io/badge/Buy%20Now-orange?style=for-the-badge" alt="Buy Now" target="_blank">](https://uelectronics.com/)
-[<img src="https://img.shields.io/badge/Getting%20Started-purple?style=for-the-badge" alt="Getting Started" target="_blank">](https://unit-electronics-mx.github.io/unit_bme688_environmental_sensor_4_in_1/mdbook/software/getting-started.html)
-
-</div>
-
 
 ## 📦 Overview
 
@@ -36,10 +24,7 @@ The BME688 Environmental Sensor 4-in-1 is a compact module that integrates tempe
 | Interfaces               | I²C and SPI (up to 3.4 MHz)                       |
 | Package Size             | 3.0 × 3.0 × 0.93 mm³                              |
 
-
-
 ## Key Features
-
 
 - **Relative Humidity**: Accurately measures ambient moisture for precise environmental monitoring.
 - **Barometric Pressure**: Detects atmospheric pressure changes to support dynamic weather tracking.
@@ -57,25 +42,19 @@ The BME688 Environmental Sensor 4-in-1 is a compact module that integrates tempe
 - **Smart Agriculture:** Monitors soil and air conditions to optimize crop growth and yield.
 - **Wearable Devices:** Supports health and fitness wearables for environmental parameter monitoring.
 
-
-
 ## 📚 Resources
 
-- [<a href="./hardware/unit_sch_v_1_0_0_bme688_environmental_sensor_4_in_1.pdf">Schematic Diagram</a>](hardware/schematic.pdf)
-- [<a href="./hardware/resources/unit_dimension_v_1_0_0_bme688_environmental_sensor_4_in_1.png">Board Dimensions (DXF)](docs/dimensions.dxf)
-- [<a href="./hardware/resources/unit_pinout_v_0_0_1_ue0095_bm3688_4_in_1_es.png">Pinout Diagram</a>](docs/pinout.png)
+- [Schematic Diagram](hardware/schematic.pdf)
+- [Board Dimensions (DXF)](docs/dimensions.dxf)
+- [Pinout Diagram](docs/pinout.png)
 - [Firmware Examples](firmware/)
 - [Getting Started Guide](docs/getting_started.md)
-
 
 ## 📝 License
 
 All hardware and documentation in this project are licensed under the **MIT License**.  
 Please refer to [`LICENSE.md`](LICENSE.md) for full terms.
 
-
-
 <div align="center">
   <sub>Template created by UNIT Electronics </sub>
 </div>
-

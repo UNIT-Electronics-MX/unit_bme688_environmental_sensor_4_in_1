@@ -1,0 +1,20 @@
+{
+  "files_created": [
+    "introduction.md",
+    "license.md",
+    "resources.md",
+    "SUMMARY.md",
+    "hardware/overview.md",
+    "hardware/key-technical-specifications.md",
+    "hardware/\u2699\ufe0f-technical-specifications.md",
+    "hardware/pinout.md",
+    "hardware/dimensions.md",
+    "hardware/topology.md",
+    "software/getting-started.md",
+    "software/examples.md",
+    "software/examples/arduino.md",
+    "software/examples/micropython.md"
+  ],
+  "files_failed": [],
+  "resources_copied": 16
+}
