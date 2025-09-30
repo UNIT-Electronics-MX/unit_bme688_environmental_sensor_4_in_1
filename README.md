@@ -6,7 +6,7 @@ The BME688 Environmental Sensor 4-in-1 is a compact module that integrates tempe
 
 
 <div align="center">
-  <img src="hardware/resources/img/unit_top_v_1_0_0_bme688_enviromental_sensor_4_in_1.png" width="450px" alt="Development Board">
+  <img src="hardware/resources/unit_top_v_1_0_0_bme688_enviromental_sensor_4_in_1.png" width="450px" alt="Development Board">
   <p><em></em></p>
 </div>
 
