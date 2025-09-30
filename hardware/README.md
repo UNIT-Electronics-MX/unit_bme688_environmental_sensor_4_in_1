@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<a href="./unit_sch_V_0_0_1_ue0095_BME688.pdf"><img src="resources/Schematics_icon.jpg?raw=false" width="450px"><br/> Schematics</a>
+<a href="./unit_sch_V_0_0_1_ue0095_BME688.pdf"><img src="resources/img/Schematics_icon.jpg?raw=false" width="450px"><br/> Schematics</a>
 </div>
 
 ## Key Technical Specifications
@@ -48,7 +48,7 @@
 
 ### **Pinout Diagram**
 
-<a href="#"><img src="resources/unit_pinout_v_0_0_1_ue0095_bm3688_4_in_1_en.jpg" width="500px"><br/>Pinout</a>
+<a href="./unit_pinout_v_0_0_2_ue0095_bme688_4_in_1_en.pdf"><img src="resources/pinout/unit_pinout_v_0_0_2_ue0095_bme688_4_in_1_en.jpg" width="500px"><br/>Pinout</a>
 <br/>
 <br/>
 
