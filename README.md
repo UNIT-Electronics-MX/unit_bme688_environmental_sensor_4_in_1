@@ -1,4 +1,4 @@
-# BME688 Environmental Sensor 4-in-1
+# DevLab: I2C BME688 Environmental 4-in-1 Sensor
 
 ## Introduction
 The BME688 Environmental Sensor 4-in-1 is a compact module that integrates temperature, humidity, barometric pressure, and gas sensing (including VOCs and IAQ) in a single package. Based on Bosch Sensortec technology, it offers digital I²C/SPI interfaces for easy integration with platforms like Arduino, ESP32, and Raspberry Pi. Its low power consumption and small size make it ideal for wearables, portable devices, and IoT applications. The sensor also supports AI-based gas classification via Bosch’s BME AI-Studio, enabling advanced air quality monitoring.
