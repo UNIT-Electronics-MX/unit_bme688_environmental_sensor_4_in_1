@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<a href="./unit_sch_V_0_0_1_ue0095_BME688.pdf"><img src="resources/Schematics_icon.jpg?raw=false" width="450px"><br/> Schematics</a>
+<a href="./unit_sch_v_1_0_0_bme688_environmental_sensor_4_in_1.pdf"><img src="resources/Schematics_icon.jpg?raw=false" width="450px"><br/> Schematics</a>
 </div>
 
 ## Key Technical Specifications
@@ -17,7 +17,7 @@
 - Package Size: 3.0 × 3.0 × 0.93 mm³
 
 
-## ⚙️ Technical Specifications
+## Technical Specifications
 
 | Parameter                                       | Technical Data                                             |
 |-------------------------------------------------|------------------------------------------------------------|
@@ -41,7 +41,7 @@
 | Pressure sensor - Sensitivity Error             | ± 0.25 % (equiv. to 1 m at 400 m height change)            |
 | Pressure sensor - Temperature coefficient offset| ±1.3 Pa/K (equiv. to ±10.9 cm at 1°C temperature change)   |
 
-## 🔌 Pinout
+## Pinout
 
 
 <div align="center">
@@ -65,13 +65,13 @@
 
 </div>
 
-## 📏 Dimensions
+## Dimensions
 
 <div style="text-align: center;">
 <a href="./resources/unit_dimension_v_1_0_0_bme688_environmental_sensor_4_in_1.png"><img src="./resources/unit_dimension_v_1_0_0_bme688_environmental_sensor_4_in_1.png" width="500px"><br/> Dimensions</a>
 </div>
 
-## 📃 Topology
+## Topology
 
 <div style="text-align: center;">
 <a href="./resources/unit_topology_v_1_0_0_bme688_environmental_sensor_4_in_1.png"><img src="./resources/unit_topology_v_1_0_0_bme688_environmental_sensor_4_in_1.png" width="450px"><br/> Topology</a>
