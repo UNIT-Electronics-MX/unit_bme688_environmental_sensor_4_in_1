@@ -22,8 +22,9 @@ The BME688 Environmental Sensor 4-in-1 is a compact module that integrates tempe
 
 </div>
 
+<div align="center">
 
-## 📦 Overview
+## Overview
 
 | Parameter                | Value/Description                                 |
 |--------------------------|---------------------------------------------------|
@@ -37,6 +38,8 @@ The BME688 Environmental Sensor 4-in-1 is a compact module that integrates tempe
 | Package Size             | 3.0 × 3.0 × 0.93 mm³                              |
 
 
+</div>
+
 
 ## Key Features
 
@@ -49,7 +52,7 @@ The BME688 Environmental Sensor 4-in-1 is a compact module that integrates tempe
 - **Interfaces:** I²C and SPI
 - **Input Voltage via VCC Pin:** 3.6–6.0 V (through onboard voltage regulator)
 
-## 🧪 Use Cases
+## Use Cases
 
 - **Environmental Monitoring:** Tracks air quality, humidity, temperature, and pressure in smart homes and industrial settings.
 - **IoT Devices:** Integrates into IoT systems for real-time environmental data collection and analysis.
@@ -59,14 +62,12 @@ The BME688 Environmental Sensor 4-in-1 is a compact module that integrates tempe
 
 
 
-## 📚 Resources
+## Resources
 
 - [<a href="./hardware/unit_sch_v_1_0_0_bme688_environmental_sensor_4_in_1.pdf">Schematic Diagram</a>](hardware/schematic.pdf)
-- [<a href="./hardware/resources/unit_dimension_v_1_0_0_bme688_environmental_sensor_4_in_1.png">Board Dimensions (DXF)](docs/dimensions.dxf)
-- [<a href="./hardware/resources/unit_pinout_v_0_0_1_ue0095_bm3688_4_in_1_es.png">Pinout Diagram</a>](docs/pinout.png)
-- [Firmware Examples](firmware/)
-- [Getting Started Guide](docs/getting_started.md)
+- [<a href="./hardware/unit_pinout_v_0_0_2_ue0095_bme688_4_in_1_en.pdf">Pinout Diagram</a>](hardware/pinout.pdf)
 
+- [Datasheet (Compatible with BME688)](https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors/bme688/#documents)
 
 ## 📝 License
 
